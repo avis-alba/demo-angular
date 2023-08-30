@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class Post2Component {
 
+  user = {
+    name: 'Valentina',
+    tech: 'Angular',
+  };
+  date = new Date();
+  img = 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg';
+
+  constructor() {
+    setTimeout(() => {
+      this.img = 'https://icones.pro/wp-content/uploads/2022/07/icone-angulaire-bleu.png'
+    }, 5000);
+  }
 }

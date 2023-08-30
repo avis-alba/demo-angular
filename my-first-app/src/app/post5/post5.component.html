@@ -1,0 +1,37 @@
+<input type="text" [value]="title" (input)="onInput($event)">
+<p>{{ title }}</p>
+<input type="text" [(ngModel)]="title2">
+<p>{{ title2 }}</p>
+
+<button (click)="backgroundToggle = !backgroundToggle">Toggle</button>
+
+<div [ngStyle]="{
+    width: '200px',
+    height: '200px',
+    margin: '10px auto',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    background: backgroundToggle ? 'red' : 'blue'
+}">
+</div>
+
+<p [ngClass]="{
+    red: backgroundToggle,
+    blue: !backgroundToggle
+}">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, maiores.</p>
+
+<p 
+[class.blue]="!backgroundToggle"
+[class.red]="backgroundToggle"
+>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa possimus vel nulla assumenda minima cumque.</p>
+
+<hr>
+
+<button (click)="toggle = !toggle">Toggle</button>
+
+<p *ngIf="toggle; else purpleP" class="green">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, commodi!</p>
+<ng-template #purpleP>
+    <p *ngIf="!toggle" class="purple">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, culpa!</p>
+</ng-template>
+
+

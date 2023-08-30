@@ -329,10 +329,22 @@
   </div>
 
   <app-post></app-post>
+  <input 
+  type="text" 
+  (keydown.enter)="onInput($event)"
+  (blur)="onBlur(myInput.value)"
+  #myInput
+  >
+  <p class="show-input"><strong>{{ inputValue }}</strong></p>
   <app-post></app-post>
+  <hr>
+  <p style="color:#125699">Динамически загружаемый текст: {{ title + ' Cool' }}, {{ number }}</p>
+  <button (click)="onClick()">Click me!</button>
   <app-post2></app-post2>
   <app-post3></app-post3>
   <app-post4></app-post4>
+  <hr style="width: 600px;">
+  <app-post5></app-post5>
 
 
 </div>
