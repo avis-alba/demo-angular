@@ -1,19 +1,39 @@
-.show-input {
-    width: 100px;
-    min-height: 25px;
-    margin: 10px auto; 
-    padding: 5px;
-    border: 1px solid black;
-    line-height: 25px;
-    overflow: auto;
+h1, h2 {
+  margin-top: 5px;
+}
+
+h2 {
+  margin-left: 10px;
+}
+
+p {
+  font-size: 1.5rem;
+}
+
+label {
+  margin-right: 5px;
 }
 
 button {
-    display: block;
-    margin: 15px auto;
+  display: block;
+  margin: 10px;
 }
 
-app-post5 {
-    width: 100%;
-    text-align: center;
+form > * {
+  margin: 20px 15px;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-control {
+  margin: 10px;
 }

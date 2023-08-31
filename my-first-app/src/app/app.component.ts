@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core'
 
 @Component({
   selector: 'app-root',
@@ -7,22 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  title = 'Test project';
-  number = 1001;
-
-  inputValue = '';
-
-  onInput(event: Event) {
-    console.log('Event', event);
-
-      this.inputValue = (<HTMLInputElement>event.target).value;
-  }
-
-  onClick() {
-    alert('Click');
-  }
-
-  onBlur(str: string) {
-    this.inputValue = str;
-  }
 }
+
