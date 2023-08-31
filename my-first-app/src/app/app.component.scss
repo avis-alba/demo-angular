@@ -26,6 +26,7 @@ form > * {
 .container {
   width: 80%;
   margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .card {
@@ -36,6 +37,10 @@ form > * {
 
 .form-control {
   margin: 10px;
+}
+
+.validation {
+  color: red;
 }
 
 input {
