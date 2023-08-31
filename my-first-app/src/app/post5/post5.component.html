@@ -34,4 +34,31 @@
     <p *ngIf="!toggle" class="purple">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, culpa!</p>
 </ng-template>
 
+<div [ngSwitch]="toggle" style="border: 3px solid gray;">
+    <button (click)="toggle = 'default'">Set default</button>
+    <p *ngSwitchCase="true" class="green">Lorem, ipsum dolor.</p>
+    <p *ngSwitchCase="false" class="purple">Lorem ipsum dolor sit.</p>
+    <p *ngSwitchDefault>Lorem</p>
+</div>
 
+<ul>
+    <li *ngFor="let letter of arr; let i = index">
+       <strong>{{ i + 1 }}</strong>: {{ letter }} 
+    </li>
+</ul>
+
+<ul style="list-style: none">
+    <li *ngFor="let post of objs">
+        <p>{{post.title}} <b>{{post.author}}</b></p>
+        <ul>
+            <li *ngFor="let comment of post.comments">
+                <div>
+                    <small>{{comment.name}}: </small>
+                    <p style="display: inline;">{{comment.text}}</p>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<p>{{ now | date: 'long' | uppercase }}</p>
