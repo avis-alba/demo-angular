@@ -37,3 +37,18 @@ form > * {
 .form-control {
   margin: 10px;
 }
+
+input {
+  &.ng-invalid.ng-touched {
+    border: 2px solid red;
+  }
+
+  &.ng-valid.ng-touched {
+    border: 2px solid green;
+  }
+}
+
+input:focus-visible {
+  border-width: 2px;
+  outline: none;
+}
