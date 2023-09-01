@@ -1,38 +1,57 @@
-<div>
+<div class="container">
+    <h1>Форма регистрации</h1>
     <form>
         <mat-form-field>
-            <mat-label>Input</mat-label>
+            <mat-label>Имя*</mat-label>
             <input type="text" matInput>
+            <mat-error>
+                поле имя обязательно для заполнения
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input type="password" matInput>
+            <mat-label>Фамилия*</mat-label>
+            <input type="text" matInput>
+            <mat-error>
+                поле фамилия обязательно для заполнения
+            </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field>
-            <mat-label>Textarea</mat-label>
-            <textarea matInput></textarea>
+            <mat-label>Email*</mat-label>
+            <input type="email" placeholder="inbox@mail.com" matInput>
+            <mat-error>
+                поле email обязательно для заполнения 
+            </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field>
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-label>Дата рождения*</mat-label>
+            <input placeholder="01.01.2001" matInput [matDatepicker]="picker">
+            <mat-hint>в формате ДД.ММ.ГГГГ</mat-hint>
+            <mat-error>
+                поле обязательно для заполнения
+            </mat-error>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-            <mat-icon>home</mat-icon>
-        </button>
+        <mat-form-field>
+            <mat-label>Пароль*</mat-label>
+            <input type="password" matInput>
+            <mat-error>
+                поле обязательно для заполнения
+            </mat-error>
+        </mat-form-field>
 
-        <button mat-raised-button color="accent">Send</button>
+        <mat-form-field>
+            <mat-label>Подтвердите пароль*</mat-label>
+            <input type="password" matInput>
+            <mat-error>
+                поле обязательно для заполнения
+            </mat-error>
+        </mat-form-field>
+
+        <button class="submit" type="submit" mat-raised-button color="primary">Отправить</button>
     </form>
 </div>
-
-
-
-
-  
-  
