@@ -1,90 +1,38 @@
-<div class="container">
-  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
-    <h1>Angular Forms</h1>
+<div>
+    <form>
+        <mat-form-field>
+            <mat-label>Input</mat-label>
+            <input type="text" matInput>
+        </mat-form-field>
 
-    <div class="form-control">
-      <label>Email</label>
-      <input type="text" placeholder="Email" formControlName="email">
-      <div
-        *ngIf="form.get('email').invalid && form.get('email').touched"
-        class="validation"
-      >
-        <small *ngIf="form.get('email').errors['required']">
-          Поле email не может быть пустым
-        </small>
-
-        <small *ngIf="form.get('email').errors['email']">
-          Введите корректный email
-        </small>
-
-        <small *ngIf="form.get('email').errors['restrictedEmail']">
-          Email {{form.get('email').value}} запрещен
-        </small>
-
-        <small *ngIf="form.get('email').errors['uniqueEmail']">
-          Email {{form.get('email').value}} занят
-        </small>
-      </div>
-    </div>
-
-    <div class="form-control">
-      <label>Пароль</label>
-      <input type="password" placeholder="Пароль" formControlName="password">
-      <div 
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input type="password" matInput>
+        </mat-form-field>
         
-        *ngIf="form.get('password').invalid && form.get('password').touched"
-        class="validation"
-      >
-        <small *ngIf="form.get('password').errors['required']">
-          Поле пароль не може быть пустым
-        </small>
-
-        <small *ngIf="form.get('password').errors['minlength']"> 
-          Пароль не может быть короче {{form.get('password').errors['minlength'].requiredLength}} символов<br>
-          Сейчас количество символов {{form.get('password').errors['minlength'].actualLength}}
-        </small>
+        <mat-form-field>
+            <mat-label>Textarea</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
         
-      </div>
-    </div>
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-    <div class="card" formGroupName="address">
-      <h2>Адрес</h2>
+        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+            <mat-icon>home</mat-icon>
+        </button>
 
-      <div class="form-control">
-        <label>Страна</label>
-
-        <select formControlName="country">
-          <option value="ru">Россия</option>
-          <option value="ua">Украина</option>
-          <option value="by">Беларусь</option>
-        </select>
-      </div>
-
-      <div class="form-control">
-        <input type="text" placeholder="Город" formControlName="city">
-      </div>
-
-      <button class="btn" type="button" (click)="setCapital()">Выбрать столицу</button>
-    </div>
-
-    <div class="card" formGroupName="skills">
-      <h2>Ваши навыки</h2>
-      <button class="btn" type="button" (click)="addSkill()">Добавить умение</button>
-      
-      <div 
-        class="form-control"
-        *ngFor="let control of skills.controls; let i = index"
-      >
-        <label>Умение {{i + 1}}</label>
-        <input type="text" [formControlName]="i">
-      </div>
-      
-    </div>
-
-    <button class="btn" type="submit" [disabled]="form.invalid || form.pending">Отправить</button>
-
-  </form>
+        <button mat-raised-button color="accent">Send</button>
+    </form>
 </div>
 
 
 
+
+  
+  
