@@ -2,6 +2,10 @@ h1 {
     text-align: center;
 }
 
+p {
+    margin: 0;
+}
+
 .container {
     width: 450px;
     min-width: 310px;
@@ -27,11 +31,15 @@ form {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    row-gap: 10px;
+    row-gap: 20px;
+}
+
+.form-field {
+    width: 90%;
 }
 
 mat-form-field {
-    width: 90%;
+    width: 100%;
 }
 
 .submit {

@@ -1,57 +1,72 @@
 <div class="container">
     <h1>Форма регистрации</h1>
-    <form>
-        <mat-form-field>
-            <mat-label>Имя*</mat-label>
-            <input type="text" matInput>
-            <mat-error>
-                поле имя обязательно для заполнения
-            </mat-error>
-        </mat-form-field>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Имя</mat-label>
+                <input type="text" matInput formControlName="name">
+            </mat-form-field>
+            <div class="error-message" *ngIf="form.get('name').invalid && form.get('name').touched">
+                <p *ngIf="form.get('name').errors['required']">поле обязательно для заполнения</p>
+                <p *ngIf="form.get('name').errors['maxlength']">имя не может быть длинее 50 символов</p>
+            </div>
+        </div>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Фамилия</mat-label>
+                <input type="text" matInput formControlName="lastName">
+            </mat-form-field>
+            <div class="error-message" *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
+                <p *ngIf="form.get('lastName').errors['required']">поле обязательно для заполнения</p>
+                <p *ngIf="form.get('lastName').errors['maxlength']">фамилия не может быть длинее 50 символов</p>
+            </div>
+        </div>
+        
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input type="email" placeholder="inbox@mail.com" matInput formControlName="email">
+            </mat-form-field>
+            <div class="error-message" *ngIf="form.get('email').invalid && form.get('email').touched">
+                <p *ngIf="form.get('email').errors['required']">поле обязательно для заполнения</p>
+                <p *ngIf="form.get('email').errors['email']">введите email в формате inbox@mail.com</p>
+            </div>
+        </div>
 
-        <mat-form-field>
-            <mat-label>Фамилия*</mat-label>
-            <input type="text" matInput>
-            <mat-error>
-                поле фамилия обязательно для заполнения
-            </mat-error>
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Дата рождения</mat-label>
+                <input placeholder="01.01.2001" matInput [matDatepicker]="picker" formControlName="birthDate">
+                <!-- <mat-hint>в формате ДД.ММ.ГГГГ</mat-hint> -->
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="error-message" *ngIf="form.get('birthDate').invalid && form.get('birthDate').touched">
+                <p *ngIf="form.get('birthDate').errors['required'];">поле обязательно для заполнения</p>
+            </div>
+        </div>
 
-        <mat-form-field>
-            <mat-label>Email*</mat-label>
-            <input type="email" placeholder="inbox@mail.com" matInput>
-            <mat-error>
-                поле email обязательно для заполнения 
-            </mat-error>
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Пароль</mat-label>
+                <input type="password" matInput formControlName="password">
+            </mat-form-field>
+            <div class="error-message" *ngIf="form.get('password').invalid && form.get('password').touched">
+                <p *ngIf="form.get('password').errors['required']">поле обязательно для заполнения</p>
+                <p *ngIf="form.get('password').errors['minlength']">пароль должен быть не короче 8 символов</p>
+            </div>
+        </div>
 
-        <mat-form-field>
-            <mat-label>Дата рождения*</mat-label>
-            <input placeholder="01.01.2001" matInput [matDatepicker]="picker">
-            <mat-hint>в формате ДД.ММ.ГГГГ</mat-hint>
-            <mat-error>
-                поле обязательно для заполнения
-            </mat-error>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Подтвердите пароль</mat-label>
+                <input type="password" matInput formControlName="confirmPassword">
+            </mat-form-field>
+            <div class="error-message" *ngIf="form.get('confirmPassword').invalid && form.get('confirmPassword').touched">
+                <p *ngIf="form.get('password').errors['required']">поле обязательно для заполнения</p>
+            </div>
+        </div>
 
-        <mat-form-field>
-            <mat-label>Пароль*</mat-label>
-            <input type="password" matInput>
-            <mat-error>
-                поле обязательно для заполнения
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Подтвердите пароль*</mat-label>
-            <input type="password" matInput>
-            <mat-error>
-                поле обязательно для заполнения
-            </mat-error>
-        </mat-form-field>
-
-        <button class="submit" type="submit" mat-raised-button color="primary">Отправить</button>
+        <button class="submit" type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Отправить</button>
     </form>
 </div>
