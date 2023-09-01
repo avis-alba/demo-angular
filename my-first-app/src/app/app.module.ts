@@ -1,28 +1,22 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser'
+import {NgModule} from '@angular/core'
 
-import { AppComponent } from './app.component';
-import { PostComponent } from './post/post.component';
-import { Post2Component } from './post2/post2.component';
-import { Post3Component } from './post3/post3.component';
-import { Post4Component } from './post4/post4.component';
-import { Post5Component } from './post5/post5.component';
-import { FormsModule } from '@angular/forms';
+import {AppComponent} from './app.component'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostComponent,
-    Post2Component,
-    Post3Component,
-    Post4Component,
-    Post5Component
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
