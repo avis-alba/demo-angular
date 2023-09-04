@@ -12,7 +12,6 @@
             <mat-error *ngIf="name.invalid && name.touched && name.errors['stringEdges']">Имя не может начинаться/заканчиваться символом или пробелом</mat-error>        
         </mat-form-field>
         
-        
         <mat-form-field>
             <mat-label>Фамилия</mat-label>
             <input type="text" matInput formControlName="lastName">
@@ -22,7 +21,6 @@
             <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['stringContent']">Фамилия не может содержать только символы или пробелы</mat-error>
             <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['stringEdges']">Фамилия не может начинаться/заканчиваться символом или пробелом</mat-error> 
         </mat-form-field>
-        
         
         <mat-form-field>
             <mat-label>Email</mat-label>
@@ -43,7 +41,6 @@
             <mat-error *ngIf="birthDate.invalid && birthDate.touched && birthDate.errors['matDatepickerMax']">Вам должно быть не менее 18 лет</mat-error>
         </mat-form-field>
 
-
         <mat-form-field>
             <mat-label>Пароль</mat-label>
             <input type="password" matInput formControlName="password">
@@ -55,7 +52,6 @@
                 <span [class.bold]="password.errors['requiredLowercaseLetter']">строчную</span> буквы, <span [class.bold]="password.errors['requiredNum']">цифру</span> и <span [class.bold]="password.errors['requiredSymbol']">символ</span></mat-error>
         </mat-form-field>        
 
-        
         <mat-form-field>
             <mat-label>Подтвердите пароль</mat-label>
             <input type="password" matInput formControlName="confirmPassword">
@@ -65,4 +61,5 @@
 
         <button class="submit" type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Отправить</button>
     </form>
+    <!-- <div></div> -->
 </div>
