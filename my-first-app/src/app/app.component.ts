@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core'
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDateFormats } from '@angular/material/core';
 import { MyValidators } from './my.validators';
-import { MatDateFormats } from '@angular/material/core';
-import { MyValidators } from './my.validators';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +17,6 @@ export class AppComponent {
   birthDate: AbstractControl;
   password: AbstractControl;
   confirmPassword: AbstractControl;
-
-  minDate: Date;
-  maxDate: Date;
-  
-	constructor() {
 
   minDate: Date;
   maxDate: Date;
@@ -60,21 +53,6 @@ export class AppComponent {
     if (month < 10) month = '0' + month;
 
     return `${year}-${month}-${day}`;
-
-    this.minDate = new Date('1900-01-01');
-    this.maxDate = new Date(this.getMaxDate(new Date()));
-  }
-
-  private getMaxDate(currentDate: Date): string {
-
-    let day: string | number = currentDate.getDate();
-    let month: string | number = currentDate.getMonth() + 1;
-    let year: string | number = currentDate.getFullYear() - 18;
-
-    if (day < 10) day = '0' + day;
-    if (month < 10) month = '0' + month;
-
-    return `${year}-${month}-${day}`;
   }
 
   public submit():void {
@@ -82,18 +60,6 @@ export class AppComponent {
     console.log(this.form.value);
   }
 }
-
-export const MOMENT_DATE_FORMATS: MatDateFormats = {
-  parse: {
-      dateInput: 'DD.MM.YYYY',
-  },
-  display: {
-      dateInput: 'DD.MM.YYYY',
-      monthYearLabel: 'MMMM Y',
-      dateA11yLabel: 'LL',
-      monthYearA11yLabel: 'MMMM Y'
-  }
-};
 
 export const MOMENT_DATE_FORMATS: MatDateFormats = {
   parse: {
