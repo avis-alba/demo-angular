@@ -8,6 +8,8 @@
             <mat-error *ngIf="name.invalid && name.touched && name.errors['required']">Поле обязательно для заполнения</mat-error>
             <mat-error *ngIf="name.invalid && name.touched && name.errors['maxlength']">Имя не может быть длинее 50 символов</mat-error>
             <mat-error *ngIf="name.invalid && name.touched && name.errors['pattern']">Имя может содержать только буквы, цифры, пробелы и символы .,-'()</mat-error>
+            <mat-error *ngIf="name.invalid && name.touched && name.errors['stringContent']">Имя не может содержать только символы или пробелы</mat-error>
+            <mat-error *ngIf="name.invalid && name.touched && name.errors['stringEdges']">Имя не может начинаться/заканчиваться символом или пробелом</mat-error>        
         </mat-form-field>
         
         
@@ -17,6 +19,8 @@
             <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['required']">Поле обязательно для заполнения</mat-error>
             <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['maxlength']">Фамилия не может быть длинее 50 символов</mat-error>
             <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['pattern']">Фамилия может содержать только буквы, цифры, пробелы и символы .,-'()</mat-error>
+            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['stringContent']">Фамилия не может содержать только символы или пробелы</mat-error>
+            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['stringEdges']">Фамилия не может начинаться/заканчиваться символом или пробелом</mat-error> 
         </mat-form-field>
         
         
@@ -30,7 +34,7 @@
         <mat-form-field>
             <mat-label>Дата рождения</mat-label>
             <input placeholder="01.01.2001" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="birthDate">
-            <mat-hint *ngIf="birthDate.invalid && birthDate.untouched">Введите дату в формате ДД.ММ.ГГГГ</mat-hint>
+            <mat-hint *ngIf="birthDate.untouched">Введите дату в формате ДД.ММ.ГГГГ</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="birthDate.invalid && birthDate.touched && birthDate.errors['required']">Поле обязательно для заполнения</mat-error>
@@ -45,8 +49,12 @@
         <mat-form-field>
             <mat-label>Пароль</mat-label>
             <input type="password" matInput formControlName="password">
+            <mat-hint *ngIf="password.untouched">Пароль должен содержать заглавную и
+                строчную буквы, цифру и символ</mat-hint>
             <mat-error *ngIf="password.invalid && password.touched && password.errors['required']">Поле обязательно для заполнения</mat-error>
             <mat-error *ngIf="password.invalid && password.touched && password.errors['minlength']">Пароль должен быть не короче 8 символов</mat-error>
+            <mat-error *ngIf="password.invalid && password.touched && password.errors['requiredValue']">Пароль должен содержать <span [class.bold]="password.errors['requiredUppercaseLetter']">заглавную</span> и
+                <span [class.bold]="password.errors['requiredLowercaseLetter']">строчную</span> буквы, <span [class.bold]="password.errors['requiredNum']">цифру</span> и <span [class.bold]="password.errors['requiredSymbol']">символ</span></mat-error>
         </mat-form-field>        
 
         

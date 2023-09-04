@@ -24,11 +24,11 @@ export class AppComponent {
 	constructor() {
 
     this.form = new FormGroup({
-      name: new FormControl(null, [Validators.required, Validators.maxLength(50), Validators.pattern('^[A-Za-zА-Яа-яЁё0-9.,\\(\\)\\s\'\\-]+$')]),
-      lastName: new FormControl(null, [Validators.required, Validators.maxLength(50), Validators.pattern('^[A-Za-zА-Яа-яЁё0-9.,\\(\\)\\s\'\\-]+$')]),
+      name: new FormControl(null, [Validators.required, Validators.maxLength(50), Validators.pattern('^[A-Za-zА-Яа-яЁё0-9.,\\(\\)\\s\'\\-]+$'), MyValidators.stringEdgesCheck]),
+      lastName: new FormControl(null, [Validators.required, Validators.maxLength(50), Validators.pattern('^[A-Za-zА-Яа-яЁё0-9.,\\(\\)\\s\'\\-]+$'), MyValidators.stringEdgesCheck]),
       email: new FormControl(null, [Validators.required, Validators.email, Validators.pattern('^.+@.+\\..+$')]),
       birthDate: new FormControl(null, [Validators.required]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(8), MyValidators.passwordRequirements, MyValidators.passwordChange]),
       confirmPassword: new FormControl(null, [Validators.required, MyValidators.passwordConfirmation])
     });
 
