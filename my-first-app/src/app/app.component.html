@@ -43,7 +43,10 @@
 
         <mat-form-field>
             <mat-label>Пароль</mat-label>
-            <input type="password" matInput formControlName="password">
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-hint *ngIf="password.untouched">Пароль должен содержать заглавную и
                 строчную буквы, цифру и символ</mat-hint>
             <mat-error *ngIf="password.invalid && password.touched && password.errors['required']">Поле обязательно для заполнения</mat-error>
@@ -54,12 +57,14 @@
 
         <mat-form-field>
             <mat-label>Подтвердите пароль</mat-label>
-            <input type="password" matInput formControlName="confirmPassword">
+            <input matInput [type]="hidePasswordConfirmation ? 'password' : 'text'" formControlName="confirmPassword">
+            <button mat-icon-button matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation" type="button">
+                <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched && confirmPassword.errors['required']">Поле обязательно для заполнения</mat-error>
             <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched && confirmPassword.errors['passwordMatch']">Пароли не совпадают, повторите ввод</mat-error>
         </mat-form-field>        
 
         <button class="submit" type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Отправить</button>
     </form>
-    <!-- <div></div> -->
 </div>

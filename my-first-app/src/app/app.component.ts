@@ -20,6 +20,9 @@ export class AppComponent {
 
   minDate: Date;
   maxDate: Date;
+
+  hidePassword: boolean;
+  hidePasswordConfirmation: boolean;
   
 	constructor() {
 
@@ -41,6 +44,9 @@ export class AppComponent {
 
     this.minDate = new Date('1900-01-01');
     this.maxDate = new Date(this.getMaxDate(new Date()));
+
+    this.hidePassword = true;
+    this.hidePasswordConfirmation = true;
   }
 
   private getMaxDate(currentDate: Date): string {
