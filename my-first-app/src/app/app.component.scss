@@ -38,16 +38,13 @@ mat-form-field {
     width: 90%;
 }
 
-mat-form-field.ng-valid:not(.mat-focused) {
+mat-form-field.ng-valid{
 
     & input {
-        // color: #31995c;
-        // color: #1f995c;
         color: #1c8c54;
     }
 }
     
-
 .submit {
     width: 50%;
     height: 50px;
