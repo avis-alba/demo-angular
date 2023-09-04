@@ -5,48 +5,56 @@
         <mat-form-field>
             <mat-label>Имя</mat-label>
             <input type="text" matInput formControlName="name">
-            <mat-error *ngIf="name.invalid && name.touched && name.errors['required']">поле обязательно для заполнения</mat-error>
-            <mat-error *ngIf="name.invalid && name.touched && name.errors['maxlength']">имя не может быть длинее 50 символов</mat-error>
+            <mat-error *ngIf="name.invalid && name.touched && name.errors['required']">Поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="name.invalid && name.touched && name.errors['maxlength']">Имя не может быть длинее 50 символов</mat-error>
+            <mat-error *ngIf="name.invalid && name.touched && name.errors['pattern']">Имя может содержать только буквы, цифры, пробелы и символы .,-'()</mat-error>
         </mat-form-field>
         
         
         <mat-form-field>
             <mat-label>Фамилия</mat-label>
             <input type="text" matInput formControlName="lastName">
-            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['required']">поле обязательно для заполнения</mat-error>
-            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['maxlength']">фамилия не может быть длинее 50 символов</mat-error>
+            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['required']">Поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['maxlength']">Фамилия не может быть длинее 50 символов</mat-error>
+            <mat-error *ngIf="lastName.invalid && lastName.touched && lastName.errors['pattern']">Фамилия может содержать только буквы, цифры, пробелы и символы .,-'()</mat-error>
         </mat-form-field>
         
         
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" placeholder="inbox@mail.com" matInput formControlName="email">
-            <mat-error *ngIf="email.invalid && email.touched && email.errors['required']">поле обязательно для заполнения</mat-error>
-            <mat-error *ngIf="email.invalid && email.touched && email.errors['email']">введите email в формате inbox@mail.com</mat-error>
+            <mat-error *ngIf="email.invalid && email.touched && email.errors['required']">Поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="email.invalid && email.touched && (email.errors['email'] || email.errors['pattern'])">Введите email в формате inbox@mail.com</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Дата рождения</mat-label>
-            <input placeholder="01.01.2001" matInput [matDatepicker]="picker" formControlName="birthDate">
-            <mat-hint *ngIf="birthDate.invalid && birthDate.untouched">введите дату в формате ДД.ММ.ГГГГ</mat-hint>
+            <input placeholder="01.01.2001" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="birthDate">
+            <mat-hint *ngIf="birthDate.invalid && birthDate.untouched">Введите дату в формате ДД.ММ.ГГГГ</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error>введите дату в указанном формате</mat-error>
+            <mat-error *ngIf="birthDate.invalid && birthDate.touched && birthDate.errors['required']">Поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="birthDate.invalid && birthDate.touched && birthDate.errors['matDatepickerParse']">Введите дату в формате ДД.ММ.ГГГГ</mat-error>
+            <mat-error *ngIf="birthDate.invalid && birthDate.touched && birthDate.errors['matDatepickerMin']">Введите дату не ранее 01.01.1900</mat-error>
+            <mat-error *ngIf="birthDate.invalid && birthDate.touched && birthDate.errors['matDatepickerMax']">Вам должно быть не менее 18 лет</mat-error>
+
+
         </mat-form-field>
 
 
         <mat-form-field>
             <mat-label>Пароль</mat-label>
             <input type="password" matInput formControlName="password">
-            <mat-error *ngIf="password.invalid && password.touched && password.errors['required']">поле обязательно для заполнения</mat-error>
-            <mat-error *ngIf="password.invalid && password.touched && password.errors['minlength']">пароль должен быть не короче 8 символов</mat-error>
+            <mat-error *ngIf="password.invalid && password.touched && password.errors['required']">Поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="password.invalid && password.touched && password.errors['minlength']">Пароль должен быть не короче 8 символов</mat-error>
         </mat-form-field>        
 
         
         <mat-form-field>
             <mat-label>Подтвердите пароль</mat-label>
             <input type="password" matInput formControlName="confirmPassword">
-            <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched && confirmPassword.errors['required']">поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched && confirmPassword.errors['required']">Поле обязательно для заполнения</mat-error>
+            <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched && confirmPassword.errors['passwordMatch']">Пароли не совпадают, повторите ввод</mat-error>
         </mat-form-field>        
 
         <button class="submit" type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Отправить</button>
