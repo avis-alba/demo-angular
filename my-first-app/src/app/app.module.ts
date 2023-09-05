@@ -1,7 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser'
 import {NgModule} from '@angular/core'
 
-import {AppComponent, MOMENT_DATE_FORMATS} from './app.component'
+import { AppComponent } from './app.component';
+import {MOMENT_DATE_FORMATS} from './reg-form/reg-form.component'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
@@ -11,11 +12,13 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter'
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {RegFormComponent} from './reg-form/reg-form.component'
 
 @NgModule({
   declarations: [
     AppComponent,
+    RegFormComponent,
   ],
   imports: [
     BrowserModule,

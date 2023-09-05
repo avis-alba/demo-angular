@@ -2,10 +2,6 @@ h1 {
     text-align: center;
 }
 
-p {
-    margin: 0;
-}
-
 .container {
     width: 450px;
     min-width: 310px;
@@ -24,33 +20,4 @@ p {
         border-radius: 0;
         box-shadow: none;
     }
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    row-gap: 20px;
-}
-
-mat-form-field {
-    width: 90%;
-}
-
-mat-form-field.ng-valid {
-
-    & input {
-        color: #1c8c54;
-    }
-}
-    
-.submit {
-    width: 50%;
-    height: 50px;
-    margin-bottom: 10px;
-}
-
-.bold {
-    font-weight: bold;
 }

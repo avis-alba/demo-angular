@@ -12,7 +12,7 @@ export class MyValidators {
         const value: string = control.value;
         if (!value) return null;
 
-        if (!value.match(/[A-Za-zА-Яа-яЁё0-9]+/)) {
+        if (!value.match(/[A-Za-zА-Яа-яЁё0-9]+/) && value.match(/^[A-Za-zА-Яа-яЁё0-9.,()\s'-]+/)) {
 
             return { stringContent: true };
 
@@ -26,7 +26,7 @@ export class MyValidators {
 
     public static passwordConfirmation(control: FormControl): ValidationErrors {
 
-        if (!control.root.value) return null;
+        if (!control.value) return null;
         
         const password: string = control.root.get('password').value;
         const confirmPassword: string = control.value;
@@ -68,7 +68,7 @@ export class MyValidators {
 
     public static passwordChange(control: FormControl): ValidationErrors {
 
-        if (!control.root.value) return null;
+        if (!control.value) return null;
 
         const confirmPassword: AbstractControl = control.root.get('confirmPassword');
 
