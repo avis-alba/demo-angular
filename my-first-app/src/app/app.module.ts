@@ -13,12 +13,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {RegFormComponent} from './reg-form/reg-form.component'
+import {RegFormComponent} from './reg-form/reg-form.component';
+import { TestComponent } from './test/test.component'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegFormComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import {RegFormComponent} from './reg-form/reg-form.component'
     MatButtonModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    HttpClientModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
