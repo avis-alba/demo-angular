@@ -11,6 +11,7 @@ export class TestComponent implements OnInit {
   todos: Todo[] = [];
   todoTitle: string = '';
   loading: boolean = false;
+  error: string = '';
 
   constructor(private todosService: TodosService) { };
   
@@ -29,10 +30,10 @@ export class TestComponent implements OnInit {
 
     this.todosService.addTodo(newTodo)
       .subscribe(todo => {
-              console.log(todo);
-              this.todos.push(todo);
-              this.todoTitle = '';
-            });
+          console.log(todo);
+          this.todos.push(todo);
+          this.todoTitle = '';
+        });
   }
 
   public fetchTodos(): void {
@@ -40,9 +41,14 @@ export class TestComponent implements OnInit {
     this.loading = true;
 
     this.todosService.fetchTodos()
-      .subscribe(todos => {
-        this.todos = todos;
-        this.loading = false;
+      .subscribe({
+        next: todos => {
+          this.todos = todos;
+          this.loading = false;
+        },
+        error: error => {
+          this.error = error.message;
+        }
       });
   }
 
