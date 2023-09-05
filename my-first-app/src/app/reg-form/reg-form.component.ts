@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDateFormats } from '@angular/material/core';
 import { MyValidators } from './my.validators';
+import { RegFormService, User } from './reg-form.service';
 
 @Component({
   selector: 'reg-form',
@@ -25,8 +26,9 @@ export class RegFormComponent {
 
   hidePassword: boolean;
   hidePasswordConfirmation: boolean;
+  hideForm: boolean; //temporary
   
-	constructor() {
+	constructor(private formService: RegFormService) {
 
     this.form = new FormGroup({
       name: new FormControl(null, [
@@ -80,6 +82,7 @@ export class RegFormComponent {
 
     this.hidePassword = true;
     this.hidePasswordConfirmation = true;
+    this.hideForm = false;
   }
 
   private getMaxDate(currentDate: Date): string {
@@ -96,7 +99,24 @@ export class RegFormComponent {
 
   public submit():void {
 
-    console.log(this.form.value);
+    const {name, lastName, email, birthDate, password} = this.form.value;
+
+    const user: User = {
+      name,
+      lastName,
+      email,
+      birthDate: birthDate._d,
+      password
+    }
+
+    this.formService.createUser(user)
+      .subscribe({
+        next: res => {
+          console.log(res);
+          this.hideForm = true;
+        },
+        error: error => console.log(error)
+      });
   }
 }
 
