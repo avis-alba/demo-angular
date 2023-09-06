@@ -20,6 +20,7 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
 import { PostsComponent } from './posts/posts.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { HomeComponent } from './home/home.component';
     AuthFormComponent,
     PostsComponent,
     HomeComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

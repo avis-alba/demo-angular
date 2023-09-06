@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, throwError } from "rxjs";
+import { environment } from "../../environments/environment.development";
 
 export interface LoginData {
     email: string;
@@ -12,6 +13,6 @@ export class AuthFormService {
     constructor(private http: HttpClient) {};
 
     login(loginData: LoginData) {
-        return this.http.post<LoginData>('https://jsonplaceholder.typicode.com/users/', loginData);
+        return this.http.post<LoginData>(`${environment.apiUrl}users/`, loginData);
     }
 }

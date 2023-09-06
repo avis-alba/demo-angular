@@ -1,10 +1,10 @@
 <ul class="menu">
+  <li [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Авторизация</li>
   <li [routerLink]="['/registration']" routerLinkActive="active">Регистрация</li>
-  <li [routerLink]="['/login']" routerLinkActive="active">Авторизация</li>
   <li [routerLink]="['/posts']" routerLinkActive="active">Посты</li>
-  <li [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+  <!-- <li [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>home</mat-icon>
-  </li>
+  </li> -->
 </ul>
 
 <router-outlet></router-outlet>

@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatDateFormats } from '@angular/material/core';
 import { MyValidators } from './my.validators';
 import { RegFormService, User } from './reg-form.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'reg-form',
@@ -27,8 +28,13 @@ export class RegFormComponent {
   hidePassword: boolean;
   hidePasswordConfirmation: boolean;
   hideForm: boolean; //temporary
+  hideError: boolean;
+
+  submitMessage: string;
   
-	constructor(private formService: RegFormService) {
+	constructor(
+    private formService: RegFormService,
+    private router: Router) {
 
     this.form = new FormGroup({
       name: new FormControl(null, [
@@ -69,6 +75,7 @@ export class RegFormComponent {
     this.hidePassword = true;
     this.hidePasswordConfirmation = true;
     this.hideForm = false;
+    this.hideError = true;
 
     this.errorMessages = ERROR_MESSAGES;
   }
@@ -99,11 +106,17 @@ export class RegFormComponent {
 
     this.formService.createUser(user)
       .subscribe({
-        next: res => {
-          console.log(res);
+        next: (user) => {
+          console.log(user);
           this.hideForm = true;
+          this.submitMessage = 'Успешная регистрация';
+          setTimeout(() => {this.router.navigate(['/'])}, 500);
         },
-        error: error => console.log(error)
+        error: (error) => {
+          console.log(error);
+          this.hideError = false;
+          this.submitMessage = 'Что-то пошло не так, попробуйте снова';
+        }
       });
   }
 }

@@ -1,6 +1,7 @@
 <div class="container">
-    <h1 *ngIf="!hideForm">Форма регистрации</h1>
-    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!hideForm; else successMessage">
+    <h1 *ngIf="!hideForm" [class.error]="!hideError">Форма регистрации</h1>
+    <p *ngIf="!hideError" class="error">{{ submitMessage }}</p>
+    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!hideForm; else message">
         <mat-form-field>
             <mat-label>Имя</mat-label>
             <input type="text" matInput formControlName="name">
@@ -66,8 +67,8 @@
     
         <button class="submit" type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Отправить</button>
     </form>
-    <ng-template #successMessage>
-        <h1>Успешная регистрация</h1>
+    <ng-template #message>
+        <h1 class="success">{{submitMessage}}</h1>
     </ng-template>
 </div>
 
