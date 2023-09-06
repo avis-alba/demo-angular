@@ -16,12 +16,14 @@ import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/mater
 import {RegFormComponent} from './reg-form/reg-form.component';
 import { TestComponent } from './test/test.component'
 import { HttpClientModule } from '@angular/common/http';
+import { AuthFormComponent } from './auth-form/auth-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegFormComponent,
     TestComponent,
+    AuthFormComponent,
   ],
   imports: [
     BrowserModule,

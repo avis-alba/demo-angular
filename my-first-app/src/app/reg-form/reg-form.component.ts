@@ -63,26 +63,14 @@ export class RegFormComponent {
     this.password = this.form.get('password');
     this.confirmPassword = this.form.get('confirmPassword');
 
-    this.errorMessages = {
-      required: 'Поле обязательно для заполнения',
-      maxLength: 'не может быть длинее 50 символов',
-      minLength: 'не может быть короче 8 символов',
-      allowedChar: 'может содержать только буквы, цифры, пробелы и символы .,-\'()',
-      notAllowedChar: 'не может содержать только символы или пробелы',
-      notAllowedEnding: 'не может начинаться/заканчиваться символом или пробелом',
-      dateFormat: 'Введите дату в формате ДД.ММ.ГГГГ',
-      minDate: 'Введите дату не ранее 01.01.1900',
-      maxDate: 'Вам должно быть не менее 18 лет',
-      emailFormat: 'Введите email в формате inbox@mail.com',
-      passwordMatch: 'Пароли не совпадают, повторите ввод',
-    };
-
     this.minDate = new Date('1900-01-01');
     this.maxDate = new Date(this.getMaxDate(new Date()));
 
     this.hidePassword = true;
     this.hidePasswordConfirmation = true;
     this.hideForm = false;
+
+    this.errorMessages = ERROR_MESSAGES;
   }
 
   private getMaxDate(currentDate: Date): string {
@@ -130,5 +118,19 @@ export const MOMENT_DATE_FORMATS: MatDateFormats = {
       dateA11yLabel: 'LL',
       monthYearA11yLabel: 'MMMM Y'
   }
+};
+
+export const ERROR_MESSAGES: { [key: string]: string } = {
+  required: 'Поле обязательно для заполнения',
+  maxLength: 'не может быть длинее 50 символов',
+  minLength: 'не может быть короче 8 символов',
+  allowedChar: 'может содержать только буквы, цифры, пробелы и символы .,-\'()',
+  notAllowedChar: 'не может содержать только символы или пробелы',
+  notAllowedEnding: 'не может начинаться/заканчиваться символом или пробелом',
+  dateFormat: 'Введите дату в формате ДД.ММ.ГГГГ',
+  minDate: 'Введите дату не ранее 01.01.1900',
+  maxDate: 'Вам должно быть не менее 18 лет',
+  emailFormat: 'Введите email в формате inbox@mail.com',
+  passwordMatch: 'Пароли не совпадают, повторите ввод',
 };
 

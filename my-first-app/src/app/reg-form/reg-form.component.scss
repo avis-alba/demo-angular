@@ -2,6 +2,10 @@ h1 {
     text-align: center;
 }
 
+p {
+    text-align: center;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -14,11 +18,8 @@ mat-form-field {
     width: 90%;
 }
 
-mat-form-field.ng-valid {
-
-    & input {
-        color: #1c8c54;
-    }
+mat-form-field.ng-valid input{
+    color: #1c8c54;
 }
     
 .submit {
