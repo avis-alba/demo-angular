@@ -18,6 +18,8 @@ import { TestComponent } from './test/test.component'
 import { HttpClientModule } from '@angular/common/http';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { PostsComponent } from './posts/posts.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { PostsComponent } from './posts/posts.component';
     TestComponent,
     AuthFormComponent,
     PostsComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { PostsComponent } from './posts/posts.component';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },

@@ -1,11 +1,10 @@
-<div class="container">
-    <reg-form></reg-form>
-    <p hidden>The form is hidden</p>
-</div>
-<div class="container">
-    <app-auth-form></app-auth-form>
-</div>
-<app-test></app-test>
-<div class="container">
-    <app-posts></app-posts>
-</div>
+<ul class="menu">
+  <li [routerLink]="['/registration']" routerLinkActive="active">Регистрация</li>
+  <li [routerLink]="['/login']" routerLinkActive="active">Авторизация</li>
+  <li [routerLink]="['/posts']" routerLinkActive="active">Посты</li>
+  <li [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>home</mat-icon>
+  </li>
+</ul>
+
+<router-outlet></router-outlet>
