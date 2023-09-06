@@ -17,6 +17,7 @@ import {RegFormComponent} from './reg-form/reg-form.component';
 import { TestComponent } from './test/test.component'
 import { HttpClientModule } from '@angular/common/http';
 import { AuthFormComponent } from './auth-form/auth-form.component';
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
     RegFormComponent,
     TestComponent,
     AuthFormComponent,
+    PostsComponent,
   ],
   imports: [
     BrowserModule,
