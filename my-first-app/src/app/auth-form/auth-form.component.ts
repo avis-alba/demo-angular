@@ -4,7 +4,7 @@ import { AuthFormService, LoginData } from './auth-form.sevice';
 import { MyValidators } from '../reg-form/my.validators';
 import { ERROR_MESSAGES } from '../reg-form/reg-form.component';
 import { Router } from '@angular/router';
-import { AUTH } from '../login';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth-form',
@@ -26,7 +26,8 @@ export class AuthFormComponent {
 
   constructor(
     private formService: AuthFormService,
-    private router: Router) {
+    private router: Router,
+    private auth: AuthService) {
     
     this.form = new FormGroup({
       email: new FormControl(null, [
@@ -65,13 +66,13 @@ export class AuthFormComponent {
         next: user => {
 
           this.hideForm = true;
+          this.auth.login();
           document.cookie = `login=${user.email};samesite=lax`;
           
           setTimeout(() => {
-            this.router.navigate(['/posts']);
-            AUTH.next(document.cookie);
+            this.router.navigate(['/']);
           }, 500);
-          
+
         },
         error: error => {
           console.log(error);

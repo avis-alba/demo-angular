@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { AUTH } from './login';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +10,10 @@ export class AppComponent {
 
   login: string;
 
-  constructor() {
+  constructor(public auth: AuthService) {
 
     this.login = this.getLogin(document.cookie);
-    
-    AUTH.subscribe((cookies) => {
-      this.login = this.getLogin(cookies);
-    });
+    if (this.login) this.auth.login();
 
   }
   
@@ -41,6 +38,7 @@ export class AppComponent {
   public logout():void {
 
     document.cookie = 'login=;samesite=lax;max-age=0';
-    AUTH.next(document.cookie);
+    this.login = '';
+    this.auth.logout();
   }
 }

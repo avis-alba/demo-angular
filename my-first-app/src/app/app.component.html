@@ -1,11 +1,11 @@
 <ul class="menu">
-  <li *ngIf="!login" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><p>Авторизация</p></li>
-  <li *ngIf="!login" [routerLink]="['/registration']" routerLinkActive="active"><p>Регистрация</p></li>
-  <li *ngIf="login" [routerLink]="['/posts']" routerLinkActive="active"><p>Посты</p></li>
-  <!-- <li [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+  <li *ngIf="auth.isAuthenticated()" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>home</mat-icon>
-  </li> -->
-  <li *ngIf="login" class="exit" (click)="logout()"><p>Выход</p><mat-icon>exit_to_app</mat-icon></li>
+  </li>
+  <li *ngIf="!auth.isAuthenticated()" [routerLink]="['/registration']" routerLinkActive="active"><p>Регистрация</p></li>
+  <li *ngIf="!auth.isAuthenticated()" [routerLink]="['/login']" routerLinkActive="active"><p>Авторизация</p></li>
+  <li *ngIf="auth.isAuthenticated()" [routerLink]="['/posts']" routerLinkActive="active"><p>Посты</p></li>
+  <li *ngIf="auth.isAuthenticated()" class="exit" (click)="logout()"><p>Выход</p><mat-icon>exit_to_app</mat-icon></li>
 </ul>
 
 <router-outlet></router-outlet>
