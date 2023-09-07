@@ -106,13 +106,14 @@ export class RegFormComponent {
 
     this.formService.createUser(user)
       .subscribe({
-        next: (user) => {
-          console.log(user);
+        next: () => {
+          
           this.hideForm = true;
           this.submitMessage = 'Успешная регистрация';
           setTimeout(() => {this.router.navigate(['/'])}, 500);
         },
         error: (error) => {
+
           console.log(error);
           this.hideError = false;
           this.submitMessage = 'Что-то пошло не так, попробуйте снова';

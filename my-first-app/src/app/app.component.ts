@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { AUTH, LoginService } from './login.service';
+import { AUTH } from './login';
 
 @Component({
   selector: 'app-root',
@@ -11,35 +10,37 @@ export class AppComponent {
 
   login: string;
 
-  constructor(private loginService: LoginService) {
+  constructor() {
 
-    this.setLogin(document.cookie);
+    this.login = this.getLogin(document.cookie);
+    
+    AUTH.subscribe((cookies) => {
+      this.login = this.getLogin(cookies);
+    });
 
-    // this.loginService.login(AUTH.login)
-    //   .subscribe(auth => {
-    //     this.login = auth;
-    //   })
   }
   
-  public setLogin(cookies: string): void {
+  public getLogin(cookies: string): string {
     
     const cookiesArr = cookies.split(';');
+    let login: string = '';
     
     for (let cookie of cookiesArr) {
       
       const cookieSplit = cookie.split('=');
       
       if (cookieSplit[0] === 'login') {
-        this.login = cookieSplit[1];
-        console.log('set login', this.login);
-        break;
+
+        login = cookieSplit[1];
       } 
     }
+
+    return login;
   }
 
   public logout():void {
 
     document.cookie = 'login=;samesite=lax;max-age=0';
-    this.login = '';
+    AUTH.next(document.cookie);
   }
 }

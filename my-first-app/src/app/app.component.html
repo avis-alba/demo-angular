@@ -1,11 +1,11 @@
 <ul class="menu">
-  <li *ngIf="!login" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Авторизация</li>
-  <li *ngIf="!login" [routerLink]="['/registration']" routerLinkActive="active">Регистрация</li>
-  <li *ngIf="login" [routerLink]="['/posts']" routerLinkActive="active">Посты</li>
+  <li *ngIf="!login" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><p>Авторизация</p></li>
+  <li *ngIf="!login" [routerLink]="['/registration']" routerLinkActive="active"><p>Регистрация</p></li>
+  <li *ngIf="login" [routerLink]="['/posts']" routerLinkActive="active"><p>Посты</p></li>
   <!-- <li [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>home</mat-icon>
   </li> -->
-  <li *ngIf="login" class="exit" (click)="logout()"><mat-icon>exit_to_app</mat-icon></li>
+  <li *ngIf="login" class="exit" (click)="logout()"><p>Выход</p><mat-icon>exit_to_app</mat-icon></li>
 </ul>
 
 <router-outlet></router-outlet>
