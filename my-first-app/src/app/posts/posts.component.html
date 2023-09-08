@@ -1,13 +1,40 @@
-<div class="container">
-  <h1>Список постов</h1>
-  <ul>
-      <li>Пост 1</li>
-      <li>Пост 2</li>
-      <li>Пост 3</li>
-      <li>Пост 4</li>
-      <li>Пост 5</li>
-      <li>Пост 6</li>
-      <li>Пост 7</li>
-  </ul>
+<div class="button-container">
+  <button mat-raised-button color="primary">Добавить пост</button>
 </div>
 
+<div class="table-container">
+  
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>№</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="text">
+      <th mat-header-cell *matHeaderCellDef>Текст</th>
+      <td mat-cell *matCellDef="let element">
+        <h3>{{element.title}}</h3>
+        <p>{{element.text}}</p>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="tools">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="edit-buttons">
+          <button mat-raised-button color="accent">Редактировать</button>
+          <button mat-raised-button color="warn">Удалить</button>
+        </div>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [length]="100"
+                [pageSize]="10"
+                showFirstLastButtons
+                aria-label="Select page">
+  </mat-paginator>
+</div>
