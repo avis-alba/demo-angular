@@ -3,10 +3,32 @@
 h3 {
   margin-bottom: 10px;
   text-align: left;
+  font-weight: 450;
 }
 
 table {
   width: 100%;
+}
+
+.error-message {
+  padding: 0px 20px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f44336;
+}
+
+.no-data {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.spinner {
+  padding: 20px 0px 0px;
+}
+
+mat-spinner {
+  margin: auto;
 }
 
 .table-container {

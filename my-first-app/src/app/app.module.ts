@@ -15,6 +15,7 @@ import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MatTableModule} from '@angular/material/table'; 
 import {MatPaginatorModule} from '@angular/material/paginator'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 import {RegFormComponent} from './reg-form/reg-form.component';
 import { TestComponent } from './test/test.component'
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +48,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     AppRoutingModule
   ],

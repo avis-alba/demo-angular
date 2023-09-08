@@ -1,27 +1,30 @@
 <div class="button-container">
-  <button mat-raised-button color="primary">Добавить пост</button>
+
+  <button *ngIf="dataSource.length" mat-raised-button color="primary">Добавить пост</button>
+  <p *ngIf="loadingStatus.error" class="error-message">Ошибка загрузки, попробуйте снова!</p>
+
 </div>
 
 <div class="table-container">
-  
+
   <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>№</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      <td mat-cell *matCellDef="let post">{{post.id}}</td>
     </ng-container>
   
     <ng-container matColumnDef="text">
-      <th mat-header-cell *matHeaderCellDef>Текст</th>
-      <td mat-cell *matCellDef="let element">
-        <h3>{{element.title}}</h3>
-        <p>{{element.text}}</p>
+      <th mat-header-cell *matHeaderCellDef>Пост</th>
+      <td mat-cell *matCellDef="let post">
+        <h3>{{post.title}}</h3>
+        <p>{{post.body}}</p>
       </td>
     </ng-container>
   
     <ng-container matColumnDef="tools">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let post">
         <div class="edit-buttons">
           <button mat-raised-button color="accent">Редактировать</button>
           <button mat-raised-button color="warn">Удалить</button>
@@ -32,9 +35,17 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <p *ngIf="loadingStatus.error" class="error-message no-data">Нет данных</p>
+  
+  <div *ngIf="loadingStatus.loading" class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+
   <mat-paginator [length]="100"
                 [pageSize]="10"
                 showFirstLastButtons
                 aria-label="Select page">
   </mat-paginator>
+
 </div>
