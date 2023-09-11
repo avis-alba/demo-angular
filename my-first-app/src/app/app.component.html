@@ -5,7 +5,7 @@
   <li *ngIf="!auth.isAuthenticated()" [routerLink]="['/registration']" routerLinkActive="active"><p>Регистрация</p></li>
   <li *ngIf="!auth.isAuthenticated()" [routerLink]="['/login']" routerLinkActive="active"><p>Авторизация</p></li>
   <li *ngIf="auth.isAuthenticated()" [routerLink]="['/posts']" routerLinkActive="active"><p>Посты</p></li>
-  <li *ngIf="auth.isAuthenticated()" class="exit" (click)="logout()"><p>Выход</p><mat-icon>exit_to_app</mat-icon></li>
+  <li *ngIf="auth.isAuthenticated()" class="exit" (click)="auth.logout()"><p>Выход</p><mat-icon>exit_to_app</mat-icon></li>
 </ul>
 
 <router-outlet></router-outlet>

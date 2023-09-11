@@ -10,7 +10,7 @@ export class AuthGuard {
         private router: Router
         ) {}
 
-    canActivate() {
+    public canActivate() {
 
         const isAuth: boolean = this.authService.isAuthenticated();
 

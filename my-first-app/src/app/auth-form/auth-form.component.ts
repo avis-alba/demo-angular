@@ -30,11 +30,11 @@ export class AuthFormComponent {
     private auth: AuthService) {
     
     this.form = new FormGroup({
-      email: new FormControl(null, [
+      email: new FormControl('my-email@mail.ru', [
         Validators.required, 
         Validators.email, 
         Validators.pattern('^.+@.+\\..+$')]),
-      password: new FormControl(null, [
+      password: new FormControl('Qwerty1!', [
         Validators.required,
         Validators.minLength(8),
         MyValidators.passwordRequirements
@@ -56,25 +56,22 @@ export class AuthFormComponent {
 
     const {email, password} = this.form.value;
 
-    const loginData: LoginData = {
-      email,
-      password
-    }
+    const loginData: LoginData = {email, password};
 
     this.formService.login(loginData)
       .subscribe({
-        next: user => {
+        next: (user) => {
 
           this.hideForm = true;
-          this.auth.login();
-          document.cookie = `login=${user.email};samesite=lax`;
+          this.auth.login(user.email);
           
           setTimeout(() => {
             this.router.navigate(['/']);
           }, 500);
 
         },
-        error: error => {
+        
+        error: (error) => {
           console.log(error);
           this.hideError = false;
         }

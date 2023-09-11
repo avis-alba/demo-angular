@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -6,39 +6,19 @@ import { AuthService } from './auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   login: string;
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService) { 
 
-    this.login = this.getLogin(document.cookie);
-    if (this.login) this.auth.login();
-
+    this.login = this.auth.getLogin(document.cookie);
   }
-  
-  public getLogin(cookies: string): string {
-    
-    const cookiesArr = cookies.split(';');
-    let login: string = '';
-    
-    for (let cookie of cookiesArr) {
-      
-      const cookieSplit = cookie.split('=');
-      
-      if (cookieSplit[0] === 'login') {
 
-        login = cookieSplit[1];
-      } 
+  public ngOnInit(): void {
+
+    if (this.login) {
+      this.auth.login(this.login);
     }
-
-    return login;
-  }
-
-  public logout():void {
-
-    document.cookie = 'login=;samesite=lax;max-age=0';
-    this.login = '';
-    this.auth.logout();
   }
 }

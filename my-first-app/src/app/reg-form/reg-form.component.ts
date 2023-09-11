@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './reg-form.component.html',
   styleUrls: ['./reg-form.component.scss']
 })
-export class RegFormComponent {
+export class RegFormComponent implements OnInit{
   
   form: FormGroup;
   name: AbstractControl;
@@ -27,7 +27,7 @@ export class RegFormComponent {
 
   hidePassword: boolean;
   hidePasswordConfirmation: boolean;
-  hideForm: boolean; //temporary
+  hideForm: boolean;
   hideError: boolean;
 
   submitMessage: string;
@@ -78,6 +78,16 @@ export class RegFormComponent {
     this.hideError = true;
 
     this.errorMessages = ERROR_MESSAGES;
+  }
+
+  public ngOnInit(): void {
+
+    this.name.setValue('Анатолий');
+    this.lastName.setValue('Анатольев');
+    this.email.setValue('my-email@mail.ru');
+    this.birthDate.setValue('2001-11-11');
+    this.password.setValue('Qwerty1!');
+    this.confirmPassword.setValue('Qwerty1!');
   }
 
   private getMaxDate(currentDate: Date): string {
