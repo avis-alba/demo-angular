@@ -1,0 +1,17 @@
+<div class="container">
+    <h1>Новый пост</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()" >
+        <mat-form-field>
+            <mat-label>Заголовок</mat-label>
+            <input type="text" placeholder="Заголовок" matInput formControlName="title">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Текст</mat-label>
+            <textarea rows="10" placeholder="Текст" matInput formControlName="body"></textarea>
+        </mat-form-field>
+        <div class="button-set">
+            <button class="submit" type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Сохранить</button>
+            <button class="cancel" type="button" (click)="cancel()" mat-raised-button color="accent">Отмена</button>
+        </div>
+    </form>
+</div>

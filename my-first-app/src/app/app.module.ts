@@ -15,7 +15,8 @@ import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MatTableModule} from '@angular/material/table'; 
 import {MatPaginatorModule} from '@angular/material/paginator'; 
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog'; 
 import {RegFormComponent} from './reg-form/reg-form.component';
 import { TestComponent } from './test/test.component'
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +25,7 @@ import { PostsComponent } from './posts/posts.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PostFormComponent } from './post-form/post-form.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HomeComponent,
     PostsComponent,
     PageNotFoundComponent,
+    PostFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     HttpClientModule,
     AppRoutingModule
   ],

@@ -1,7 +1,11 @@
 <div class="button-container">
 
-  <button *ngIf="dataSource.length" mat-raised-button color="primary">Добавить пост</button>
+  <button *ngIf="dataSource.length" mat-raised-button color="primary" (click)="create()">Добавить пост</button>
   <p *ngIf="error" class="error message">Ошибка загрузки, попробуйте снова!</p>
+  <p *ngIf="postError" class="error post message">Не удалось добавить пост, попробуйте снова</p>
+  <p *ngIf="deleteError" class="error post message">Не удалось удалить пост, попробуйте снова</p>
+  <p *ngIf="editError" class="error post message">Не удалось отредактировать пост, попробуйте снова</p>
+
 
   <div class="loading-shade" *ngIf="isLoadingResults && !error">
     <mat-spinner></mat-spinner>
@@ -30,8 +34,8 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let post">
         <div class="edit-buttons">
-          <button mat-raised-button color="accent">Редактировать</button>
-          <button mat-raised-button color="warn">Удалить</button>
+          <button (click)="edit(post)" mat-raised-button color="accent">Редактировать</button>
+          <button (click)="delete(post.id)" mat-raised-button color="warn">Удалить</button>
         </div>
       </td>
     </ng-container>
