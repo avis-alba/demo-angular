@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
+import { Observable, catchError, delay, throwError } from "rxjs";
 import { environment } from "../../environments/environment.development";
 
 export interface Post {
@@ -15,6 +15,6 @@ export class PostsService {
 
     public download(page: number) {
         const url: string = `${environment.apiUrl}posts?_page=${page + 1}`
-        return this.http.get<Post[]>(url);
+        return this.http.get<Post[]>(url).pipe(delay(500));
     }
 }

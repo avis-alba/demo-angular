@@ -7,6 +7,7 @@ import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/mat
 import { MyCustomPaginatorIntl } from './paginator-intl.service';
 import { Post, PostsService } from './posts.service';
 import { Observable, catchError, delay, map, merge, startWith, switchMap, throwError } from 'rxjs';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-posts',
@@ -22,14 +23,11 @@ export class PostsComponent implements AfterViewInit {
   public resultsLength: number = 0;
   public isLoadingResults:boolean = true;
   public isRateLimitReached:boolean = false;
-  public loadingStatus: {
-    error: boolean,
-    loading: boolean
-  }
 
-  public loading: boolean = false;
+  public error: boolean = false;
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatProgressSpinner) spinner: MatProgressSpinner;
 
   constructor(
     private auth: AuthService,
@@ -39,32 +37,28 @@ export class PostsComponent implements AfterViewInit {
       auth.isAuthDynamic.subscribe((isAuth) => {
         if (!isAuth) this.router.navigate(['/login']);
       });
-
-      this.loadingStatus = {
-        loading: false,
-        error: false
-      }
   }
 
   ngAfterViewInit(): void {
-
-    this.loadingStatus.loading = true;
 
     this.paginator.page
     .pipe(
       startWith({}),
       switchMap(() => {
+
         this.isLoadingResults = true;
         return this.postServ.download(this.paginator.pageIndex)
+
         .pipe(catchError((error) => {
           console.log(error);
-          this.loadingStatus.error = true;
-          return throwError(() => new Error('Не удалось загрузить данные'));
+          this.error = true;
+          return throwError(() => null);
         }));
+        
       }),
       map(data => {
 
-        if (!(data instanceof Array)) return []; 
+        if (!(data instanceof Array)) return [];
         
         this.isLoadingResults = false;
         this.isRateLimitReached = data === null;
@@ -78,9 +72,8 @@ export class PostsComponent implements AfterViewInit {
       })
     ).subscribe(posts => {
 
-      this.loadingStatus.loading = false;
       this.dataSource = posts;
-    })
+    });
   }
     
     // addData() {

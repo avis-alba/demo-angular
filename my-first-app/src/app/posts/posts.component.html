@@ -1,7 +1,11 @@
 <div class="button-container">
 
   <button *ngIf="dataSource.length" mat-raised-button color="primary">Добавить пост</button>
-  <p *ngIf="loadingStatus.error" class="error-message">Ошибка загрузки, попробуйте снова!</p>
+  <p *ngIf="error" class="error message">Ошибка загрузки, попробуйте снова!</p>
+
+  <div class="loading-shade" *ngIf="isLoadingResults && !error">
+    <mat-spinner></mat-spinner>
+  </div>
 
 </div>
 
@@ -36,11 +40,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <p *ngIf="loadingStatus.error" class="error-message no-data">Нет данных</p>
-  
-  <div *ngIf="loadingStatus.loading" class="spinner">
-    <mat-spinner></mat-spinner>
-  </div>
+  <p *ngIf="error" class="error message data">Нет данных</p>
+  <p *ngIf="isLoadingResults && !error" class="loading message data">Загрузка данных</p>
 
   <mat-paginator [length]="100"
                 [pageSize]="10"
