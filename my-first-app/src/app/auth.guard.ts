@@ -7,10 +7,9 @@ export class AuthGuard {
     
     constructor(
         private authService: AuthService,
-        private router: Router
-        ) {}
+        private router: Router) {}
 
-    public canActivate() {
+    public canActivate(): boolean {
 
         const isAuth: boolean = this.authService.isAuthenticated();
 

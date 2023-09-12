@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
 import { environment } from "../../environments/environment.development";
+import { Observable } from "rxjs";
 
 export interface LoginData {
     email: string;
@@ -12,7 +12,7 @@ export interface LoginData {
 export class AuthFormService {
     constructor(private http: HttpClient) {};
 
-    login(loginData: LoginData) {
+    public login(loginData: LoginData): Observable<LoginData> {
         return this.http.post<LoginData>(`${environment.apiUrl}users/`, loginData);
     }
 }

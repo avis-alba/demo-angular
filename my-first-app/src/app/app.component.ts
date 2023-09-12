@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent implements OnInit {
 
-  login: string;
+  private login: string;
 
   constructor(public auth: AuthService) { 
 

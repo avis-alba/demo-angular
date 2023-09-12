@@ -12,25 +12,25 @@ import { Router } from '@angular/router';
 })
 export class RegFormComponent implements OnInit{
   
-  form: FormGroup;
-  name: AbstractControl;
-  lastName: AbstractControl;
-  email: AbstractControl;
-  birthDate: AbstractControl;
-  password: AbstractControl;
-  confirmPassword: AbstractControl;
+  public form: FormGroup;
+  public name: AbstractControl;
+  public lastName: AbstractControl;
+  public email: AbstractControl;
+  public birthDate: AbstractControl;
+  public password: AbstractControl;
+  public confirmPassword: AbstractControl;
 
-  errorMessages: { [key: string]: string };
+  public errorMessages: { [key: string]: string };
 
-  minDate: Date;
-  maxDate: Date;
+  public minDate: Date;
+  public maxDate: Date;
 
-  hidePassword: boolean;
-  hidePasswordConfirmation: boolean;
-  hideForm: boolean;
-  hideError: boolean;
+  public hidePassword: boolean;
+  public hidePasswordConfirmation: boolean;
+  public hideForm: boolean;
+  public hideError: boolean;
 
-  submitMessage: string;
+  public submitMessage: string;
   
 	constructor(
     private formService: RegFormService,
@@ -148,6 +148,10 @@ export const ERROR_MESSAGES: { [key: string]: string } = {
   required: 'Поле обязательно для заполнения',
   maxLength: 'не может быть длинее 50 символов',
   minLength: 'не может быть короче 8 символов',
+  maxLengthPost: 'не может быть длинее 500 символов',
+  minLengthPost: 'не может быть короче 100 символов',
+  maxLengthTitle: 'не может быть длинее 100 символов',
+  minLengthTitle: 'не может быть короче 10 символов',
   allowedChar: 'может содержать только буквы, цифры, пробелы и символы .,-\'()',
   notAllowedChar: 'не может содержать только символы или пробелы',
   notAllowedEnding: 'не может начинаться/заканчиваться символом или пробелом',
@@ -157,4 +161,3 @@ export const ERROR_MESSAGES: { [key: string]: string } = {
   emailFormat: 'Введите email в формате inbox@mail.com',
   passwordMatch: 'Пароли не совпадают, повторите ввод',
 };
-

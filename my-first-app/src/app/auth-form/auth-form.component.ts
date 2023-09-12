@@ -13,16 +13,16 @@ import { AuthService } from '../auth.service';
 })
 export class AuthFormComponent {
 
-  form: FormGroup;
-  email: AbstractControl;
-  password: AbstractControl;
+  public form: FormGroup;
+  public email: AbstractControl;
+  public password: AbstractControl;
 
-  errorMessages: { [key: string]: string };
-  authErrorMessage: string;
+  public errorMessages: { [key: string]: string };
+  public authErrorMessage: string;
 
-  hidePassword: boolean;
-  hideForm: boolean;
-  hideError: boolean;
+  public hidePassword: boolean;
+  public hideForm: boolean;
+  public hideError: boolean;
 
   constructor(
     private formService: AuthFormService,

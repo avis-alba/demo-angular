@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Post } from '../posts/posts.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PostForm } from '../posts/posts.service';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ERROR_MESSAGES } from '../reg-form/reg-form.component';
 
 @Component({
   selector: 'app-post-form',
@@ -10,29 +11,43 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PostFormComponent {
 
-  form: FormGroup;
+  public form: FormGroup;
+  public title: AbstractControl;
+  public body: AbstractControl;
+  public errorMessages: {[key: string]: string};
 
   constructor(
     public dialogRef: MatDialogRef<PostFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Post,
+    @Inject(MAT_DIALOG_DATA) public data: PostForm,
   ) {
 
     this.form = new FormGroup({
-      title: new FormControl(null, [Validators.required]),
-      body: new FormControl(null, [Validators.required])
+      title: new FormControl(null, [
+        Validators.required, 
+        Validators.minLength(10),
+        Validators.maxLength(100)]),
+      body: new FormControl(null, [
+        Validators.required, 
+        Validators.minLength(100),
+        Validators.maxLength(500)])
     });
 
+    this.title = this.form.get('title');
+    this.body = this.form.get('body');
+
+    this.dialogRef.afterOpened().subscribe(() => {
+      this.title.setValue(data.title);
+      this.body.setValue(data.body);
+    });
+
+    this.errorMessages = ERROR_MESSAGES;
   }
 
-  public submit() {
+  public submit(): void {
     this.dialogRef.close(this.form.value);
   }
 
   public cancel(): void {
     this.dialogRef.close();
   }
-
-  // onNoClick(): void {
-  //   this.dialogRef.close();
-  // }
 }

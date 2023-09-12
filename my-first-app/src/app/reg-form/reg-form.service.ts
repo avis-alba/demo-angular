@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
 import { environment } from "../../environments/environment.development";
+import { Observable } from "rxjs";
 
 export interface User {
     name: string;
@@ -15,7 +15,7 @@ export interface User {
 export class RegFormService {
     constructor(private http: HttpClient) {};
 
-    createUser(user: User) {
+    public createUser(user: User): Observable<User> {
         return this.http.post<User>(`${environment.apiUrl}users/`, user);
     }
 }

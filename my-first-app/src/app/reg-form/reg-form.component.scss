@@ -16,7 +16,8 @@ mat-form-field {
     width: 90%;
 }
 
-mat-form-field.ng-valid input{
+mat-form-field.ng-valid input,
+mat-form-field.ng-valid textarea{
     color: #1c8c54;
 }
     

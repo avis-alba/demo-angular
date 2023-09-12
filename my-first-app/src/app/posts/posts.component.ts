@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import {MatTable, MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatButtonModule} from '@angular/material/button';
-import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTable } from '@angular/material/table';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MyCustomPaginatorIntl } from './paginator-intl.service';
 import { Post, PostsService } from './posts.service';
-import { Observable, catchError, delay, map, merge, startWith, switchMap, throwError } from 'rxjs';
+import { catchError, map, startWith, switchMap, throwError } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
+import { LOADING_MESSAGES } from './posts.service';
 
 @Component({
   selector: 'app-posts',
@@ -30,6 +30,8 @@ export class PostsComponent implements AfterViewInit {
   public postError: boolean = false;
   public deleteError: boolean = false;
   public editError: boolean = false;
+
+  public messages: {[key: string]: string};
   
   @ViewChild(MatTable) table: MatTable<Post>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -44,9 +46,11 @@ export class PostsComponent implements AfterViewInit {
       auth.isAuthDynamic.subscribe((isAuth) => {
         if (!isAuth) this.router.navigate(['/login']);
       });
+    
+      this.messages = LOADING_MESSAGES;
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
 
     this.paginator.page
     .pipe(
@@ -84,7 +88,10 @@ export class PostsComponent implements AfterViewInit {
   }
 
   public create(): void {
-    const dialogRef = this.dialog.open(PostFormComponent);
+    const dialogRef = this.dialog.open(PostFormComponent, {
+      data: {
+        formTitle: 'Новый пост'
+      }});
 
     dialogRef.afterClosed().subscribe(post => {
 
@@ -120,10 +127,10 @@ export class PostsComponent implements AfterViewInit {
   public edit(post: Post): void {
 
     const dialogRef = this.dialog.open(PostFormComponent, {
-      data: 111
-    });
-
-    dialogRef.afterOpened().subscribe(data => console.log('ddd', data));
+      data: {
+        formTitle: 'Редактировать пост',
+        ...post
+      }});
 
     dialogRef.afterClosed().subscribe(editedPost => {
 
@@ -144,15 +151,4 @@ export class PostsComponent implements AfterViewInit {
     });
 
   }
-     
-    // addData() {
-    //   const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    //   this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
-    //   this.table.renderRows();
-    // }
-  
-    // removeData() {
-    //   this.dataSource.pop();
-    //   this.table.renderRows();
-    // }
 }
