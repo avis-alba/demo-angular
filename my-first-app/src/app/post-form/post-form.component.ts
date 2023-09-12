@@ -18,17 +18,15 @@ export class PostFormComponent {
 
   constructor(
     public dialogRef: MatDialogRef<PostFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: PostForm,
+    @Inject(MAT_DIALOG_DATA) public data: PostForm
   ) {
 
     this.form = new FormGroup({
       title: new FormControl(null, [
         Validators.required, 
-        Validators.minLength(10),
         Validators.maxLength(100)]),
       body: new FormControl(null, [
-        Validators.required, 
-        Validators.minLength(100),
+        Validators.required,
         Validators.maxLength(500)])
     });
 

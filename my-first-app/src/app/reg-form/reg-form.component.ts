@@ -33,8 +33,8 @@ export class RegFormComponent implements OnInit{
   public submitMessage: string;
   
 	constructor(
-    private formService: RegFormService,
-    private router: Router) {
+    private _formService: RegFormService,
+    private _router: Router) {
 
     this.form = new FormGroup({
       name: new FormControl(null, [
@@ -70,7 +70,7 @@ export class RegFormComponent implements OnInit{
     this.confirmPassword = this.form.get('confirmPassword');
 
     this.minDate = new Date('1900-01-01');
-    this.maxDate = new Date(this.getMaxDate(new Date()));
+    this.maxDate = new Date(this._getMaxDate(new Date()));
 
     this.hidePassword = true;
     this.hidePasswordConfirmation = true;
@@ -90,7 +90,7 @@ export class RegFormComponent implements OnInit{
     this.confirmPassword.setValue('Qwerty1!');
   }
 
-  private getMaxDate(currentDate: Date): string {
+  private _getMaxDate(currentDate: Date): string {
 
     let day: string | number = currentDate.getDate();
     let month: string | number = currentDate.getMonth() + 1;
@@ -114,13 +114,13 @@ export class RegFormComponent implements OnInit{
       password
     }
 
-    this.formService.createUser(user)
+    this._formService.createUser(user)
       .subscribe({
         next: () => {
           
           this.hideForm = true;
           this.submitMessage = 'Успешная регистрация';
-          setTimeout(() => {this.router.navigate(['/'])}, 500);
+          setTimeout(() => {this._router.navigate(['/'])}, 500);
         },
         error: (error) => {
 
@@ -149,9 +149,7 @@ export const ERROR_MESSAGES: { [key: string]: string } = {
   maxLength: 'не может быть длинее 50 символов',
   minLength: 'не может быть короче 8 символов',
   maxLengthPost: 'не может быть длинее 500 символов',
-  minLengthPost: 'не может быть короче 100 символов',
   maxLengthTitle: 'не может быть длинее 100 символов',
-  minLengthTitle: 'не может быть короче 10 символов',
   allowedChar: 'может содержать только буквы, цифры, пробелы и символы .,-\'()',
   notAllowedChar: 'не может содержать только символы или пробелы',
   notAllowedEnding: 'не может начинаться/заканчиваться символом или пробелом',

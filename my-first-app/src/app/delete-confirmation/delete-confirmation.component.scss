@@ -1,0 +1,23 @@
+@import url(../post-form/post-form.component.scss);
+
+.container {
+    width: 320px;
+    padding: 30px;
+}
+
+@media (max-width: 400px) {
+
+    .container {
+        width: auto;
+    }
+}
+
+.button-set {
+
+    & button {
+        width: 75px;
+    }
+
+    width: 100%;
+    justify-content: space-around;
+}

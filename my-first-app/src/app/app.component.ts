@@ -8,17 +8,17 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent implements OnInit {
 
-  private login: string;
+  private _login: string;
 
   constructor(public auth: AuthService) { 
 
-    this.login = this.auth.getLogin(document.cookie);
+    this._login = this.auth.getLogin(document.cookie);
   }
 
   public ngOnInit(): void {
 
-    if (this.login) {
-      this.auth.login(this.login);
+    if (this._login) {
+      this.auth.login(this._login);
     }
   }
 }

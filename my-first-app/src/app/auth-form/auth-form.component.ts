@@ -25,9 +25,9 @@ export class AuthFormComponent {
   public hideError: boolean;
 
   constructor(
-    private formService: AuthFormService,
-    private router: Router,
-    private auth: AuthService) {
+    private _formService: AuthFormService,
+    private _router: Router,
+    private _auth: AuthService) {
     
     this.form = new FormGroup({
       email: new FormControl('my-email@mail.ru', [
@@ -58,15 +58,15 @@ export class AuthFormComponent {
 
     const loginData: LoginData = {email, password};
 
-    this.formService.login(loginData)
+    this._formService.login(loginData)
       .subscribe({
         next: (user) => {
 
           this.hideForm = true;
-          this.auth.login(user.email);
+          this._auth.login(user.email);
           
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this._router.navigate(['/']);
           }, 500);
 
         },

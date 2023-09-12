@@ -10,9 +10,9 @@ export interface LoginData {
 
 @Injectable({providedIn: 'root'})
 export class AuthFormService {
-    constructor(private http: HttpClient) {};
+    constructor(private _http: HttpClient) {};
 
     public login(loginData: LoginData): Observable<LoginData> {
-        return this.http.post<LoginData>(`${environment.apiUrl}users/`, loginData);
+        return this._http.post<LoginData>(`${environment.apiUrl}users/`, loginData);
     }
 }

@@ -13,9 +13,9 @@ export interface User {
 
 @Injectable({providedIn: 'root'})
 export class RegFormService {
-    constructor(private http: HttpClient) {};
+    constructor(private _http: HttpClient) {};
 
     public createUser(user: User): Observable<User> {
-        return this.http.post<User>(`${environment.apiUrl}users/`, user);
+        return this._http.post<User>(`${environment.apiUrl}users/`, user);
     }
 }

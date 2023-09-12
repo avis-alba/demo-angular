@@ -5,12 +5,12 @@ import { AuthFormComponent } from "./auth-form/auth-form.component";
 import { PostsComponent } from "./posts/posts.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { HomeComponent } from "./home/home.component";
-import { AuthGuard } from "./auth.guard";
+import { AuthGuard, HomeGuard, NoAuthGuard } from "./auth.guard";
 
 const routes: Routes = [
-    {path: '', component: HomeComponent, canActivate: [AuthGuard]},
-    {path: 'registration', component: RegFormComponent},
-    {path: 'login', component: AuthFormComponent},
+    {path: '', component: HomeComponent, canActivate: [HomeGuard]},
+    {path: 'registration', component: RegFormComponent, canActivate: [NoAuthGuard]},
+    {path: 'login', component: AuthFormComponent, canActivate: [NoAuthGuard]},
     {path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
     {path: '404', component: PageNotFoundComponent},
     {path: '**', redirectTo: '/404'}

@@ -24,6 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PostFormComponent } from './post-form/post-form.component';
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PostFormComponent } from './post-form/post-form.component';
     PostsComponent,
     PageNotFoundComponent,
     PostFormComponent,
+    DeleteConfirmationComponent,
   ],
   imports: [
     BrowserModule,

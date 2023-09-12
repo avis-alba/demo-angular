@@ -4,7 +4,7 @@ import { BehaviorSubject } from "rxjs";
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
-    private isAuth = false;
+    private _isAuth = false;
     public isAuthDynamic = new BehaviorSubject(false);
 
     public getLogin(cookies: string): string {
@@ -28,19 +28,19 @@ export class AuthService {
     public login(login: string): void {
 
         document.cookie = `login=${login};samesite=lax`;
-        this.isAuth = true;
-        this.isAuthDynamic.next(this.isAuth);
+        this._isAuth = true;
+        this.isAuthDynamic.next(this._isAuth);
     }
 
     public logout(): void {
 
         document.cookie = 'login=;samesite=lax;max-age=0';
-        this.isAuth = false;
-        this.isAuthDynamic.next(this.isAuth);
+        this._isAuth = false;
+        this.isAuthDynamic.next(this._isAuth);
     }
 
     public isAuthenticated(): boolean {
 
-        return this.isAuth;
+        return this._isAuth;
     }
 }

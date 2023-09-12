@@ -10,6 +10,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
 import { LOADING_MESSAGES } from './posts.service';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 
 @Component({
   selector: 'app-posts',
@@ -38,13 +39,13 @@ export class PostsComponent implements AfterViewInit {
   @ViewChild(MatProgressSpinner) spinner: MatProgressSpinner;
 
   constructor(
-    private auth: AuthService,
-    private router: Router,
-    private postServ: PostsService,
+    private _auth: AuthService,
+    private _router: Router,
+    private _postServ: PostsService,
     public dialog: MatDialog) {
 
-      auth.isAuthDynamic.subscribe((isAuth) => {
-        if (!isAuth) this.router.navigate(['/login']);
+      _auth.isAuthDynamic.subscribe((isAuth) => {
+        if (!isAuth) this._router.navigate(['/login']);
       });
     
       this.messages = LOADING_MESSAGES;
@@ -58,7 +59,7 @@ export class PostsComponent implements AfterViewInit {
       switchMap(() => {
 
         this.isLoadingResults = true;
-        return this.postServ.download(this.paginator.pageIndex)
+        return this._postServ.download(this.paginator.pageIndex)
 
         .pipe(catchError((error) => {
           console.log(error);
@@ -88,6 +89,7 @@ export class PostsComponent implements AfterViewInit {
   }
 
   public create(): void {
+
     const dialogRef = this.dialog.open(PostFormComponent, {
       data: {
         formTitle: 'Новый пост'
@@ -99,7 +101,7 @@ export class PostsComponent implements AfterViewInit {
 
       post.id = Math.floor(Math.random() * 900) + 101;
 
-      this.postServ.create(post)
+      this._postServ.create(post)
       .pipe(catchError((error) => {
         console.log(error);
         this.postError = true;
@@ -112,16 +114,24 @@ export class PostsComponent implements AfterViewInit {
   }
 
   public delete(id: number): void {
-    
-    this.postServ.delete(id)
-    .pipe(catchError((error) => {
-      console.log(error);
-      this.deleteError = true;
-      return throwError(() => null);
-    }));
 
-    this.dataSource = this.dataSource.filter(post => post.id !== id);
-    this.table.renderRows();
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent);
+
+    dialogRef.afterClosed().subscribe(isConfirmed => {
+
+      if (!isConfirmed) return;
+
+      this._postServ.delete(id)
+      .pipe(catchError((error) => {
+        console.log(error);
+        this.deleteError = true;
+        return throwError(() => null);
+      }));
+  
+      this.dataSource = this.dataSource.filter(post => post.id !== id);
+      this.table.renderRows();
+      
+    });
   }
 
   public edit(post: Post): void {
@@ -136,7 +146,7 @@ export class PostsComponent implements AfterViewInit {
 
       if (!editedPost) return; //
       
-      this.postServ.edit(post.id, editedPost)
+      this._postServ.edit(post.id, editedPost)
       .pipe(catchError((error) => {
         console.log(error);
         this.editError = true;
