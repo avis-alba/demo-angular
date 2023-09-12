@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-import { MyCustomPaginatorIntl } from './paginator-intl.service';
-import { Post, PostsService } from './posts.service';
+import { MyCustomPaginatorIntl } from '../../services/paginator-intl.service';
+import { PostsService } from '../../services/posts.service';
 import { catchError, map, startWith, switchMap, throwError } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
-import { LOADING_MESSAGES } from './posts.service';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { Post } from 'src/app/utils/types';
+import { LOADING_MESSAGES } from 'src/app/utils/const';
 
 @Component({
   selector: 'app-posts',

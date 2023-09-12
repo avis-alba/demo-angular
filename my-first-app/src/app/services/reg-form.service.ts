@@ -2,14 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment.development";
 import { Observable } from "rxjs";
-
-export interface User {
-    name: string;
-    lastName: string;
-    email: string;
-    birthDate: Date;
-    password: string;
-}
+import { User } from "../utils/types";
 
 @Injectable({providedIn: 'root'})
 export class RegFormService {

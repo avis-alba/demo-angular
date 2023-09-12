@@ -1,11 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { RegFormComponent } from "./reg-form/reg-form.component";
-import { AuthFormComponent } from "./auth-form/auth-form.component";
-import { PostsComponent } from "./posts/posts.component";
-import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
-import { HomeComponent } from "./home/home.component";
-import { AuthGuard, HomeGuard, NoAuthGuard } from "./auth.guard";
+import { RegFormComponent } from "./components/reg-form/reg-form.component";
+import { AuthFormComponent } from "./components/auth-form/auth-form.component";
+import { PostsComponent } from "./components/posts/posts.component";
+import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
+import { HomeComponent } from "./components/home/home.component";
+import { AuthGuard} from "./guards/auth.guard";
+import { NoAuthGuard } from "./guards/no-auth.guard";
+import { HomeGuard } from "./guards/home.guard";
 
 const routes: Routes = [
     {path: '', component: HomeComponent, canActivate: [HomeGuard]},

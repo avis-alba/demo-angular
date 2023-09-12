@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core'
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatDateFormats } from '@angular/material/core';
+import {Component, OnInit} from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyValidators } from './my.validators';
-import { RegFormService, User } from './reg-form.service';
+import { RegFormService } from '../../services/reg-form.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/utils/types';
+import { ERROR_MESSAGES } from 'src/app/utils/const';
 
 @Component({
   selector: 'reg-form',
@@ -131,31 +132,3 @@ export class RegFormComponent implements OnInit{
       });
   }
 }
-
-export const MOMENT_DATE_FORMATS: MatDateFormats = {
-  parse: {
-      dateInput: 'DD.MM.YYYY',
-  },
-  display: {
-      dateInput: 'DD.MM.YYYY',
-      monthYearLabel: 'MMMM Y',
-      dateA11yLabel: 'LL',
-      monthYearA11yLabel: 'MMMM Y'
-  }
-};
-
-export const ERROR_MESSAGES: { [key: string]: string } = {
-  required: 'Поле обязательно для заполнения',
-  maxLength: 'не может быть длинее 50 символов',
-  minLength: 'не может быть короче 8 символов',
-  maxLengthPost: 'не может быть длинее 500 символов',
-  maxLengthTitle: 'не может быть длинее 100 символов',
-  allowedChar: 'может содержать только буквы, цифры, пробелы и символы .,-\'()',
-  notAllowedChar: 'не может содержать только символы или пробелы',
-  notAllowedEnding: 'не может начинаться/заканчиваться символом или пробелом',
-  dateFormat: 'Введите дату в формате ДД.ММ.ГГГГ',
-  minDate: 'Введите дату не ранее 01.01.1900',
-  maxDate: 'Вам должно быть не менее 18 лет',
-  emailFormat: 'Введите email в формате inbox@mail.com',
-  passwordMatch: 'Пароли не совпадают, повторите ввод',
-};

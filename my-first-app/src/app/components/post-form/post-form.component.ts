@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PostForm } from '../posts/posts.service';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ERROR_MESSAGES } from '../reg-form/reg-form.component';
+import { PostForm } from 'src/app/utils/types';
+import { ERROR_MESSAGES } from 'src/app/utils/const';
 
 @Component({
   selector: 'app-post-form',

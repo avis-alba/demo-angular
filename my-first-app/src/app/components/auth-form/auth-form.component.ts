@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthFormService, LoginData } from './auth-form.sevice';
+import { AuthFormService } from '../../services/auth-form.sevice';
 import { MyValidators } from '../reg-form/my.validators';
-import { ERROR_MESSAGES } from '../reg-form/reg-form.component';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
+import { LoginData } from 'src/app/utils/types';
+import { ERROR_MESSAGES } from 'src/app/utils/const';
 
 @Component({
   selector: 'app-auth-form',
