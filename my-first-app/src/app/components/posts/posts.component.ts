@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, OnChanges, OnDestroy, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MyCustomPaginatorIntl } from '../../services/paginator-intl.service';
 import { PostsService } from '../../services/posts.service';
-import { catchError, map, startWith, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, startWith, switchMap, throwError } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
@@ -19,7 +19,7 @@ import { LOADING_MESSAGES } from 'src/app/utils/const';
   styleUrls: ['./posts.component.scss'],
   providers: [{provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}],
 })
-export class PostsComponent implements AfterViewInit {
+export class PostsComponent implements AfterViewInit, OnDestroy {
   
   public displayedColumns: string[] = ['id', 'text', 'tools'];
   public dataSource: Post[] = [];
@@ -34,6 +34,10 @@ export class PostsComponent implements AfterViewInit {
   public editError: boolean = false;
 
   public messages: {[key: string]: string};
+
+  public i: number;
+  public timer: ReturnType<typeof setInterval>;
+  public isDialogOpen: boolean;
   
   @ViewChild(MatTable) table: MatTable<Post>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -50,6 +54,12 @@ export class PostsComponent implements AfterViewInit {
       });
     
       this.messages = LOADING_MESSAGES;
+
+      this.i = 1;
+
+      this.timer = setInterval(() => {
+        this._postServ.reload.next(this.i++);
+      }, 120000);
   }
 
   public ngAfterViewInit(): void {
@@ -86,10 +96,36 @@ export class PostsComponent implements AfterViewInit {
     ).subscribe(posts => {
 
       this.dataSource = posts;
+    })
+
+    this._postServ.reload.subscribe((t) => {
+
+      if (this.isDialogOpen || !t) return;
+
+      this.isLoadingResults = true;
+
+      this._postServ.download(this.paginator.pageIndex)
+      .pipe(catchError((error) => {
+        console.log(error);
+        this.error = true;
+        return throwError(() => null);
+      }))
+      .subscribe(posts => {
+
+        this.dataSource = posts;
+        this.isLoadingResults = false;
+      })
     });
   }
 
+  public ngOnDestroy(): void {
+
+    clearInterval(this.timer);
+  }
+ 
   public create(): void {
+
+    this.isDialogOpen = true;
 
     const dialogRef = this.dialog.open(PostFormComponent, {
       data: {
@@ -97,6 +133,8 @@ export class PostsComponent implements AfterViewInit {
       }});
 
     dialogRef.afterClosed().subscribe(post => {
+
+      this.isDialogOpen = false;
 
       if (!post) return;
 
@@ -116,9 +154,13 @@ export class PostsComponent implements AfterViewInit {
 
   public delete(id: number): void {
 
+    this.isDialogOpen = true;
+
     const dialogRef = this.dialog.open(DeleteConfirmationComponent);
 
     dialogRef.afterClosed().subscribe(isConfirmed => {
+
+      this.isDialogOpen = false;
 
       if (!isConfirmed) return;
 
@@ -137,6 +179,8 @@ export class PostsComponent implements AfterViewInit {
 
   public edit(post: Post): void {
 
+    this.isDialogOpen = true;
+
     const dialogRef = this.dialog.open(PostFormComponent, {
       data: {
         formTitle: 'Редактировать пост',
@@ -145,7 +189,9 @@ export class PostsComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(editedPost => {
 
-      if (!editedPost) return; //
+      this.isDialogOpen = false;
+
+      if (!editedPost) return;
       
       this._postServ.edit(post.id, editedPost)
       .pipe(catchError((error) => {
@@ -160,6 +206,5 @@ export class PostsComponent implements AfterViewInit {
 
       this.table.renderRows();
     });
-
   }
 }

@@ -1,11 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, delay } from "rxjs";
+import { BehaviorSubject, Observable, delay } from "rxjs";
 import { Post } from "../utils/types";
 import { POSTS_URL } from "../utils/const";
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
+
+    public reload: BehaviorSubject<number> = new BehaviorSubject(0);
+
     constructor(private _http: HttpClient) {};
 
     public download(page: number): Observable<Post[]> {

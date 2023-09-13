@@ -4,8 +4,8 @@ import { BehaviorSubject } from "rxjs";
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
-    private _isAuth = false;
-    public isAuthDynamic = new BehaviorSubject(false);
+    private _isAuth: boolean = false;
+    public isAuthDynamic: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     public getLogin(cookies: string): string {
     
