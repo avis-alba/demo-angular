@@ -5,7 +5,7 @@ import { MatTable } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MyCustomPaginatorIntl } from '../../services/paginator-intl.service';
 import { PostsService } from '../../services/posts.service';
-import { Subscription, catchError, interval, map, startWith, switchMap, throwError } from 'rxjs';
+import { Subscription, catchError, map, startWith, switchMap, throwError } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
@@ -37,7 +37,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
   public isDialogOpen: boolean;
   public isTabActive: boolean;
-  public reloadSub: Subscription;
+  public subscriptions: Subscription[] = [];
   
   @ViewChild(MatTable) table: MatTable<Post>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -49,9 +49,11 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
     private _postServ: PostsService,
     public dialog: MatDialog) {
 
-      _auth.isAuthDynamic.subscribe((isAuth) => {
+      const authSub: Subscription = _auth.isAuthDynamic.subscribe((isAuth) => {
         if (!isAuth) this._router.navigate(['/login']);
       });
+
+      this.subscriptions.push(authSub);
     
       this.messages = LOADING_MESSAGES;
 
@@ -63,7 +65,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void {
 
-    this.paginator.page
+    const loadSub: Subscription = this.paginator.page
     .pipe(
       startWith({}),
       switchMap(() => {
@@ -97,13 +99,15 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
       this.dataSource = posts;
     })
 
-    this.reloadSub = this._postServ.reload.subscribe(() => {
+    this.subscriptions.push(loadSub);
+
+    const reloadSub: Subscription = this._postServ.reload.subscribe(() => {
 
       if (this.isDialogOpen || !this.isTabActive) return;
 
       this.isLoadingResults = true;
 
-      this._postServ.download(this.paginator.pageIndex)
+      const reloadDataSub: Subscription = this._postServ.download(this.paginator.pageIndex)
       .pipe(catchError((error) => {
         console.log(error);
         this.error = true;
@@ -114,12 +118,16 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
         this.dataSource = posts;
         this.isLoadingResults = false;
       })
+
+      this.subscriptions.push(reloadDataSub);
     });
+
+    this.subscriptions.push(reloadSub);
   }
 
   public ngOnDestroy(): void {
 
-    this.reloadSub.unsubscribe();
+    this.subscriptions.forEach((sub) => { sub.unsubscribe() });
   }
  
   public create(): void {
@@ -131,7 +139,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
         formTitle: 'Новый пост'
       }});
 
-    dialogRef.afterClosed().subscribe(post => {
+    const createSub: Subscription = dialogRef.afterClosed().subscribe(post => {
 
       this.isDialogOpen = false;
 
@@ -149,6 +157,8 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
       this.dataSource.unshift(post);
       this.table.renderRows();
     });
+
+    this.subscriptions.push(createSub);
   }
 
   public delete(id: number): void {
@@ -157,7 +167,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
     const dialogRef = this.dialog.open(DeleteConfirmationComponent);
 
-    dialogRef.afterClosed().subscribe(isConfirmed => {
+    const deleteSub: Subscription = dialogRef.afterClosed().subscribe(isConfirmed => {
 
       this.isDialogOpen = false;
 
@@ -174,6 +184,8 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
       this.table.renderRows();
       
     });
+
+    this.subscriptions.push(deleteSub);
   }
 
   public edit(post: Post): void {
@@ -186,7 +198,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
         ...post
       }});
 
-    dialogRef.afterClosed().subscribe(editedPost => {
+    const editSub: Subscription = dialogRef.afterClosed().subscribe(editedPost => {
 
       this.isDialogOpen = false;
 
@@ -205,5 +217,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
       this.table.renderRows();
     });
+
+    this.subscriptions.push(editSub);
   }
 }
