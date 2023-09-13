@@ -5,7 +5,7 @@ import { MatTable } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MyCustomPaginatorIntl } from '../../services/paginator-intl.service';
 import { PostsService } from '../../services/posts.service';
-import { BehaviorSubject, Observable, catchError, map, startWith, switchMap, throwError } from 'rxjs';
+import { catchError, map, startWith, switchMap, throwError } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
@@ -38,6 +38,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
   public i: number;
   public timer: ReturnType<typeof setInterval>;
   public isDialogOpen: boolean;
+  public isTabActive: boolean;
   
   @ViewChild(MatTable) table: MatTable<Post>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -60,6 +61,11 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
       this.timer = setInterval(() => {
         this._postServ.reload.next(this.i++);
       }, 120000);
+
+      this.isTabActive = true;
+     
+      window.onfocus = () => { this.isTabActive = true };
+      window.onblur = () => { this.isTabActive = false };
   }
 
   public ngAfterViewInit(): void {
@@ -100,7 +106,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
     this._postServ.reload.subscribe((t) => {
 
-      if (this.isDialogOpen || !t) return;
+      if (this.isDialogOpen || !t || !this.isTabActive ) return;
 
       this.isLoadingResults = true;
 
