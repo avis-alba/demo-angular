@@ -1,26 +1,17 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { RegFormComponent } from "./components/reg-form/reg-form.component";
-import { AuthFormComponent } from "./components/auth-form/auth-form.component";
-import { PostsComponent } from "./components/posts/posts.component";
-import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
-import { HomeComponent } from "./components/home/home.component";
-import { AuthGuard} from "./guards/auth.guard";
-import { NoAuthGuard } from "./guards/no-auth.guard";
-import { HomeGuard } from "./guards/home.guard";
-
-const routes: Routes = [
-    {path: '', component: HomeComponent, canActivate: [HomeGuard]},
-    {path: 'registration', component: RegFormComponent, canActivate: [NoAuthGuard]},
-    {path: 'login', component: AuthFormComponent, canActivate: [NoAuthGuard]},
-    {path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
-    {path: '404', component: PageNotFoundComponent},
-    {path: '**', redirectTo: '/404'}
-];
+import {NgModule} from '@angular/core'
+import {RouterModule} from '@angular/router'
+import {HomePageComponent} from './home-page/home-page.component'
+import {AboutPageComponent} from './about-page/about-page.component'
+import {AboutExtraPageComponent} from './about-page/about-extra-page/about-extra-page.component'
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot([
+    {path: 'about', component: AboutPageComponent, children: [
+      {path: 'extra', component: AboutExtraPageComponent}
+    ]},
+    {path: '', component: HomePageComponent, pathMatch: 'full'}
+  ])],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 
