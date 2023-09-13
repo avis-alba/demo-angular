@@ -14,6 +14,7 @@ const routes: Routes = [
     {path: 'registration', component: RegFormComponent, canActivate: [NoAuthGuard]},
     {path: 'login', component: AuthFormComponent, canActivate: [NoAuthGuard]},
     {path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
+    {path: 'budget', loadChildren: () => import('./components/budget/budget.module').then(m => m.BudgetModule)},
     {path: '404', component: PageNotFoundComponent},
     {path: '**', redirectTo: '/404'}
 ];
