@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, DoCheck, OnChanges, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MyCustomPaginatorIntl } from '../../services/paginator-intl.service';
 import { PostsService } from '../../services/posts.service';
-import { catchError, map, startWith, switchMap, throwError } from 'rxjs';
+import { Subscription, catchError, interval, map, startWith, switchMap, throwError } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormComponent } from '../post-form/post-form.component';
@@ -35,10 +35,9 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
   public messages: {[key: string]: string};
 
-  public i: number;
-  public timer: ReturnType<typeof setInterval>;
   public isDialogOpen: boolean;
   public isTabActive: boolean;
+  public reloadSub: Subscription;
   
   @ViewChild(MatTable) table: MatTable<Post>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -55,12 +54,6 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
       });
     
       this.messages = LOADING_MESSAGES;
-
-      this.i = 1;
-
-      this.timer = setInterval(() => {
-        this._postServ.reload.next(this.i++);
-      }, 120000);
 
       this.isTabActive = true;
      
@@ -104,9 +97,9 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
       this.dataSource = posts;
     })
 
-    this._postServ.reload.subscribe((t) => {
+    this.reloadSub = this._postServ.reload.subscribe(() => {
 
-      if (this.isDialogOpen || !t || !this.isTabActive ) return;
+      if (this.isDialogOpen || !this.isTabActive) return;
 
       this.isLoadingResults = true;
 
@@ -126,7 +119,7 @@ export class PostsComponent implements AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
 
-    clearInterval(this.timer);
+    this.reloadSub.unsubscribe();
   }
  
   public create(): void {

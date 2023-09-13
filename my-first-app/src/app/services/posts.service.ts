@@ -1,15 +1,18 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, delay } from "rxjs";
+import { Observable, delay, interval } from "rxjs";
 import { Post } from "../utils/types";
 import { POSTS_URL } from "../utils/const";
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
 
-    public reload: BehaviorSubject<number> = new BehaviorSubject(0);
+    public reload: Observable<number>;
 
-    constructor(private _http: HttpClient) {};
+    constructor(private _http: HttpClient) {
+
+        this.reload = interval(120000);
+    };
 
     public download(page: number): Observable<Post[]> {
         const url: string = `${POSTS_URL}?_page=${page + 1}`;
