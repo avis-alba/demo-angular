@@ -1,0 +1,109 @@
+@import url(../../app.component.scss);
+
+h3 {
+  margin-bottom: 10px;
+  text-align: left;
+  font-weight: 450;
+}
+
+table {
+  width: 100%;
+}
+
+.postText {
+  word-break: break-word;
+}
+
+.message {
+  padding: 0px 20px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.error {
+  color: #f44336;
+}
+
+.loading {
+  color: #673ab7;
+}
+
+.data {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.post {
+  display: inline-flex;
+}
+
+.loading-shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  margin: auto;
+  padding: 20px 0px 0px;
+}
+
+.table-container {
+  margin: 20px auto 30px;
+  box-shadow: 0px 2px 3px 2px rgba(103, 58, 183, 0.4);
+}
+
+.button-container {
+  margin: 20px;
+}
+
+.edit-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mat-column-id {
+  width: 30px;
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #673ab7;
+}
+
+.mat-column-text {
+  padding: 15px;
+  text-align: justify;
+}
+
+.mat-column-tools {
+  width: 300px;
+  padding: 15px;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f0e8ff;
+}
+
+@media (max-width: 1000px) {
+
+  .table-container {
+    margin-bottom: 0px;
+  }
+  
+  .mat-column-tools {
+      width: 170px;
+  }
+
+  .edit-buttons {
+    justify-content: flex-start;
+  }
+}

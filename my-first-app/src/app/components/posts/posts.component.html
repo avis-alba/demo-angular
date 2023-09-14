@@ -1,0 +1,55 @@
+<div class="button-container">
+
+  <button *ngIf="dataSource.length" mat-raised-button color="primary" (click)="create()">Добавить пост</button>
+  <p *ngIf="error" class="error message">{{ messages['loadingError'] }}</p>
+  <p *ngIf="postError" class="error post message">{{ messages['addError'] }}</p>
+  <p *ngIf="deleteError" class="error post message">{{ messages['deleteError'] }}</p>
+  <p *ngIf="editError" class="error post message">{{ messages['editError'] }}</p>
+
+  <div class="loading-shade" *ngIf="isLoadingResults && !error">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</div>
+
+<div class="table-container">
+
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>№</th>
+      <td mat-cell *matCellDef="let post">{{post.id}}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="text">
+      <th mat-header-cell *matHeaderCellDef>Пост</th>
+      <td mat-cell *matCellDef="let post">
+        <h3>{{ post.title }}</h3>
+        <p class="postText">{{ post.body }}</p>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="tools">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let post">
+        <div class="edit-buttons">
+          <button (click)="edit(post)" mat-raised-button color="accent">Редактировать</button>
+          <button (click)="delete(post.id)" mat-raised-button color="warn">Удалить</button>
+        </div>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <p *ngIf="error" class="error message data">{{ messages['noData'] }}</p>
+  <p *ngIf="isLoadingResults && !error" class="loading message data">{{ messages['loading'] }}</p>
+
+  <mat-paginator [length]="100"
+                [pageSize]="10"
+                showFirstLastButtons
+                aria-label="Select page">
+  </mat-paginator>
+
+</div>

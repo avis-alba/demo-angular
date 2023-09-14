@@ -1,3 +1,12 @@
-<div class="container">
-    <reg-form></reg-form>
-</div>
+<ul class="menu">
+  <!-- <li *ngIf="auth.isAuthenticated()" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>home</mat-icon>
+  </li> -->
+  <li *ngIf="!auth.isAuthenticated()" [routerLink]="['/registration']" routerLinkActive="active"><p>Регистрация</p></li>
+  <li *ngIf="!auth.isAuthenticated()" [routerLink]="['/login']" routerLinkActive="active"><p>Авторизация</p></li>
+  <li *ngIf="auth.isAuthenticated()" [routerLink]="['/posts']" routerLinkActive="active"><p>Посты</p></li>
+  <li *ngIf="auth.isAuthenticated()" [routerLink]="['/budget']" routerLinkActive="active"><p>Бюджет</p></li>
+  <li *ngIf="auth.isAuthenticated()" class="exit" (click)="auth.logout()"><p>Выход</p><mat-icon>exit_to_app</mat-icon></li>
+</ul>
+
+<router-outlet></router-outlet>

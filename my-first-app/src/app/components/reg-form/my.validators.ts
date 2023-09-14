@@ -77,6 +77,10 @@ export class MyValidators {
             if (control.value !== confirmPassword.value) {
 
                 confirmPassword.setErrors({ passwordMatch: true });
+
+            } else {
+                 
+                confirmPassword.updateValueAndValidity();
             }
         }
 
