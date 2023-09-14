@@ -5,7 +5,8 @@ import { Router, RouterModule } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
-import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { MatIcon, MatIconModule } from "@angular/material/icon";
         ]),
         MatTableModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatCheckboxModule
     ]
 })
 export class BudgetModule {

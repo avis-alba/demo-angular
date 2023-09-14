@@ -8,7 +8,7 @@ import { MatTable } from '@angular/material/table';
 })
 export class BudgetComponent {
   
-    public displayedColumns: string[] = ['category', 'item', 'amount', 'percent', 'tools'];
+    public displayedColumns: string[] = ['check', 'category', 'item', 'amount', 'percent', 'tools'];
     public incomeData: any[] = [{1: 'd'}, {2: 'f'}];
     public outcomeData: any[] = [1, 2, 3, 4, 5];
 
