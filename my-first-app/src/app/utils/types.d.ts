@@ -23,10 +23,15 @@ export interface LoginData {
     password: string;
 }
 
+export interface BudgetPointInfo {
+    title: string;
+    description: string;
+}
+
 export interface BudgetPoint {
     check: boolean;
     category: string;
-    item:{ title: string, description: string };
+    item: BudgetPointInfo;
     amount: number;
     percent: number;
 }
@@ -34,4 +39,5 @@ export interface BudgetPoint {
 export interface TableData {
     name: string;
     dataSource: BudgetPoint[];
+    total: number;
 }

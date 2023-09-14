@@ -38,13 +38,13 @@
                 <td mat-cell *matCellDef="let point">
                   <p>{{ point.amount | currency:'RUB':'symbol-narrow':'1.1-1' }}</p>
                 </td>
-                <td mat-footer-cell *matFooterCellDef>1000</td>
+                <td mat-footer-cell *matFooterCellDef>{{ table.total | currency:'RUB':'symbol-narrow':'1.1-1' }}</td>
             </ng-container>
         
             <ng-container matColumnDef="percent">
                 <th mat-header-cell *matHeaderCellDef>%</th>
                 <td mat-cell *matCellDef="let point">
-                  <p>{{ point.percent | percent }}</p>
+                  <p>{{ point.percent | percent:'1.1-1' }}</p>
                 </td>
               <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
