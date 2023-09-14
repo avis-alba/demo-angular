@@ -1,4 +1,5 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, Input } from '@angular/core';
+import { TableData } from 'src/app/utils/types';
 
 let tableNum: number = 0;
 
@@ -7,25 +8,13 @@ let tableNum: number = 0;
   templateUrl: './budget-table.component.html',
   styleUrls: ['./budget-table.component.scss']
 })
-@Injectable({providedIn: 'root'})
 export class BudgetTableComponent {
 
+  @Input() table: TableData;
+
   public displayedColumns: string[] = ['check', 'category', 'item', 'amount', 'percent', 'tools'];
-  public dataSource: any[];
-  public tableName: string;
 
   constructor() {
-    if (!tableNum) {
 
-      this.dataSource = [1,2];
-      this.tableName = 'Доход';
-      tableNum++;
-
-    } else {
-
-      this.dataSource = [1,2,3,4,5,6];
-      this.tableName = 'Расход';
-      tableNum = 0;
-    }
   }
 }
