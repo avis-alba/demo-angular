@@ -1,0 +1,78 @@
+@import url(../posts/posts.component.scss);
+@import url(../budget/budget.component.scss);
+
+h2, h3 {
+    margin: 0;
+}
+
+.table-head {
+    height: 42px;
+}
+
+.header {
+    display: block;
+    float: left;
+    height: 100%;
+    margin-top: 0;
+    padding: 5px 16px;
+    box-sizing: border-box;
+}
+
+.add-item {
+    display: block;
+    float: left;
+    height: 100%;
+    margin-left: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+.table-container {
+    margin-bottom: 0;
+}
+
+.mat-mdc-footer-row {
+    font-weight: bold;
+    background: #673ab7;
+    color: #fff;
+}
+
+.mat-column-check {
+    width: 60px;
+    padding: 0;
+    border-right: 1px solid #673ab7;
+    text-align: center;
+}
+
+.mat-column-amount {
+    width: 110px;
+    text-align: center;
+}
+
+.mat-column-percent {
+    width: 70px;
+    text-align: center;
+}
+
+.mat-column-tools {
+    width: 140px;
+}
+
+.mat-mdc-footer-cell:first-child {
+    padding-left: 10px;
+}
+
+.edit-buttons {
+    justify-content: center;
+
+    & mat-icon {
+        margin: 0;
+    }
+}
