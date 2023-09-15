@@ -31,7 +31,7 @@
         <mat-form-field>
             <mat-label>Сумма</mat-label>
             <input type="number" placeholder="Сумма" matInput formControlName="amount">
-            <mat-error *ngIf="amount.invalid && amount.touched && amount.errors['required']">{{ errorMessages['required'] }}</mat-error>
+            <mat-error *ngIf="amount.invalid && amount.touched && amount.errors['required']">{{ errorMessages['required'] }}: введите число</mat-error>
             <mat-error *ngIf="amount.invalid && amount.touched && amount.errors['min']">{{ errorMessages['minAmount'] }}</mat-error>
         </mat-form-field>
 
