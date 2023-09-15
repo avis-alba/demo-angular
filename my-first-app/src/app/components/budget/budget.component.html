@@ -1,6 +1,6 @@
 <div class="content">
 
-    <app-budget-table *ngFor="let t of tables" [table]="t"></app-budget-table>
+    <app-budget-table *ngFor="let t of tables" [table]="t" (onDelete)="deletePoint($event)"></app-budget-table>
 
 </div>
 

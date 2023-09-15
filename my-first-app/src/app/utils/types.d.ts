@@ -1,5 +1,3 @@
-import { DataSource } from "@angular/cdk/collections";
-
 export interface User {
     name: string;
     lastName: string;
@@ -41,3 +39,8 @@ export interface TableData {
     dataSource: BudgetPoint[];
     total: number;
 }
+
+export interface PointChangeData {
+    tableName: string;
+    index: number
+  }

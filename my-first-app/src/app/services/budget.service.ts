@@ -22,7 +22,7 @@ export class BudgetService {
 
     get total(): number {
         
-        this._total = this._collection.reduce((summ, p) => summ += p.amount, 0);
+        this.setTotal();
         return this._total;
     }
 
@@ -33,8 +33,22 @@ export class BudgetService {
         }
     }
 
+    private setTotal(): void {
+
+        this._total = this._collection.reduce((summ, p) => summ += p.amount, 0);
+    }
+
     public getCheckedPoints(): BudgetPoint[] {
 
         return this._collection.filter((point) => point.check);
+    }
+
+    public deletePoint(index: number): BudgetPoint[] {
+
+        this._collection = this._collection.filter((p, i) => index !== i);
+        this.setPercents();
+        this.setTotal();
+
+        return this._collection;
     }
 }

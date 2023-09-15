@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { TableData } from 'src/app/utils/types';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PointChangeData, TableData } from 'src/app/utils/types';
 
 @Component({
   selector: 'app-budget-table',
@@ -9,9 +9,9 @@ import { TableData } from 'src/app/utils/types';
 export class BudgetTableComponent {
 
   @Input() table: TableData;
+  @Output() onDelete: EventEmitter<PointChangeData> = new EventEmitter<PointChangeData>;
 
   public displayedColumns: string[];
-  public checked: boolean
 
   constructor() {
 
@@ -23,5 +23,10 @@ export class BudgetTableComponent {
       'percent', 
       'tools'
     ];
-  }  
+  }
+  
+  public deletePoint(tableName: string, index: number): void {
+
+    this.onDelete.emit({tableName, index});
+  }
 }
