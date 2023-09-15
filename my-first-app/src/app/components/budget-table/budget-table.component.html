@@ -2,7 +2,7 @@
 
     <div class="table-head">
         <div class="table-container header"><h2>{{ table.name }}</h2></div>
-        <button class="add-item" mat-raised-button color="primary">Добавить</button>
+        <button class="add-item" mat-raised-button color="primary" (click)="addPoint(table.name)">Добавить</button>
     </div>
    
     <div class="table-container">

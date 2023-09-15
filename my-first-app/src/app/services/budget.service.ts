@@ -46,8 +46,17 @@ export class BudgetService {
     public deletePoint(index: number): BudgetPoint[] {
 
         this._collection = this._collection.filter((p, i) => index !== i);
-        this.setPercents();
         this.setTotal();
+        this.setPercents();
+
+        return this._collection;
+    }
+
+    public addPoint(point: BudgetPoint): BudgetPoint[] {
+
+        this._collection.unshift(point);
+        this.setTotal();
+        this.setPercents();
 
         return this._collection;
     }

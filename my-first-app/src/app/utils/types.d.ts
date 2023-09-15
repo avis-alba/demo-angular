@@ -40,7 +40,13 @@ export interface TableData {
     total: number;
 }
 
-export interface PointChangeData {
+export interface PointData {
     tableName: string;
     index: number
-  }
+}
+
+export interface PointFullData {
+    tableName: string;
+    index: number;
+    point: BudgetPoint;
+}

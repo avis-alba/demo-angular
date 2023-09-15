@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BudgetService } from 'src/app/services/budget.service';
+import { BudgetService} from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
-import { TableData } from 'src/app/utils/types';
+import { PointFullData, TableData } from 'src/app/utils/types';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
-
 
 @Component({
   selector: 'app-budget',
@@ -70,5 +69,20 @@ export class BudgetComponent {
           this.outcomeTable.total = this._outcomeBudget.total;
         } 
       });  
+    }
+
+    public addPoint(newPointData: PointFullData) {
+
+      if (newPointData.tableName === 'Доход') {
+
+        this.incomeTable.dataSource = this._incomeBudget.addPoint(newPointData.point);
+        this.incomeTable.total = this._incomeBudget.total;
+      }
+
+      if (newPointData.tableName === 'Расход') {
+
+        this.outcomeTable.dataSource = this._outcomeBudget.addPoint(newPointData.point);
+        this.outcomeTable.total = this._outcomeBudget.total;
+      }
     }
 }
