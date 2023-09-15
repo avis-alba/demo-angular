@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BudgetService } from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
-import { BudgetPoint, TableData } from 'src/app/utils/types';
+import { TableData } from 'src/app/utils/types';
 
 
 @Component({
@@ -12,28 +12,34 @@ import { BudgetPoint, TableData } from 'src/app/utils/types';
 export class BudgetComponent {
 
     public tables: TableData[];
-    public incomeData: BudgetPoint[];
-    public outcomeData: BudgetPoint[];
-    public total: number;
+
+    public incomeTable: TableData;
+    public outcomeTable: TableData;
+
+    private _incomeBudget: BudgetService;
+    private _outcomeBudget: BudgetService;
     
-    constructor(private _budget: BudgetService) {
+    constructor(){
 
-      this.incomeData = incomeData;
-      this.outcomeData = outcomeData;
+      this._incomeBudget = new BudgetService();
+      this._outcomeBudget = new BudgetService();
       
-      this.tables = [
-        {name: 'Доход', dataSource: this.incomeData, total: 0},
-        {name: 'Расход', dataSource: this.outcomeData, total: 0}
-      ];
+      this._incomeBudget.collection = incomeData;
+      this._outcomeBudget.collection = outcomeData;
 
-      for (let table of this.tables) {
+      this.incomeTable = {
+        name: 'Доход', 
+        dataSource: this._incomeBudget.collection, 
+        total: this._incomeBudget.total
+      };
 
-        table.total = _budget.getTotal(table.dataSource);
-
-        for (let point of table.dataSource) {
-
-          point.percent = _budget.getPercent(point, table.dataSource);
-        }     
-      }
+      this.outcomeTable = {
+        name: 'Расход', 
+        dataSource: 
+        this._outcomeBudget.collection, 
+        total: this._outcomeBudget.total
+      };
+      
+      this.tables = [this.incomeTable, this.outcomeTable];
     }
 }

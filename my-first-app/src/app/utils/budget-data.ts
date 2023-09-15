@@ -50,6 +50,13 @@ export const outcomeData: BudgetPoint[] = [
     amount: 300,
     percent: 0.2
   },
+  {
+    check: false,
+    category: 'Квартира',
+    item: {title: 'Отопление', description: 'По нормативу'},
+    amount: 1500,
+    percent: 0.2
+  },
 ]
 
 export const incomeData: BudgetPoint[] = [
