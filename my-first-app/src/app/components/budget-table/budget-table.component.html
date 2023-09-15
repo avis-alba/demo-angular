@@ -11,7 +11,7 @@
             <ng-container matColumnDef="check" sticky>
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let point">
-                    <mat-checkbox color="primary"></mat-checkbox>
+                    <mat-checkbox color="primary" [(ngModel)]="point.check"></mat-checkbox>
                 </td>
                 <td mat-footer-cell *matFooterCellDef>Всего:</td>
             </ng-container>

@@ -1,7 +1,5 @@
-import { Component, Injectable, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TableData } from 'src/app/utils/types';
-
-let tableNum: number = 0;
 
 @Component({
   selector: 'app-budget-table',
@@ -12,9 +10,18 @@ export class BudgetTableComponent {
 
   @Input() table: TableData;
 
-  public displayedColumns: string[] = ['check', 'category', 'item', 'amount', 'percent', 'tools'];
+  public displayedColumns: string[];
+  public checked: boolean
 
   constructor() {
 
-  }
+    this.displayedColumns = [
+      'check', 
+      'category', 
+      'item', 
+      'amount', 
+      'percent', 
+      'tools'
+    ];
+  }  
 }

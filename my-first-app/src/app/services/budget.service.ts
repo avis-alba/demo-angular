@@ -32,4 +32,9 @@ export class BudgetService {
             point.percent = point.amount / this.total;
         }
     }
+
+    public getCheckedPoints(): BudgetPoint[] {
+
+        return this._collection.filter((point) => point.check);
+    }
 }

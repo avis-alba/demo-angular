@@ -8,6 +8,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BudgetTableComponent } from "../budget-table/budget-table.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { BudgetTableComponent } from "../budget-table/budget-table.component";
         MatTableModule,
         MatButtonModule,
         MatIconModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        FormsModule
     ]
 })
 export class BudgetModule {

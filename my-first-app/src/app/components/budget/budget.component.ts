@@ -42,4 +42,9 @@ export class BudgetComponent {
       
       this.tables = [this.incomeTable, this.outcomeTable];
     }
+
+    showChecked(num: number) {
+      if (!num) console.log('Доход:', this._incomeBudget.getCheckedPoints());
+      if (num) console.log('Расход:', this._outcomeBudget.getCheckedPoints());
+    }
 }

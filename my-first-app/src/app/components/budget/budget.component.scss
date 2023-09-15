@@ -11,11 +11,26 @@ app-budget-table {
     flex: 1;
 }
 
+.log-buttons {
+    width: 700px;
+    margin: 10px auto;
+    text-align: center;
+    border: 1px solid #673ab7;
+
+    & button {
+        margin: 20px;
+    }
+}
+
 @media (max-width: 1000px) {
     
     .content {
         gap: 20px;
         padding: 20px;
+    }
+
+    .log-buttons {
+        display: none;
     }
 }
 
@@ -33,3 +48,5 @@ app-budget-table {
         overflow-x: scroll;
     }
 }
+
+
