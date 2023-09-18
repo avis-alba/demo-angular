@@ -43,21 +43,24 @@ export class BudgetService {
         return this._collection.filter((point) => point.check);
     }
 
-    public deletePoint(index: number): BudgetPoint[] {
+    public addPoint(point: BudgetPoint): void {
+        
+        this._collection.unshift(point);
+        this.setTotal();
+        this.setPercents();
+    }
+    
+    public editPoint(index: number, pointData: BudgetPoint): void {
+        
+        this._collection[index] = pointData;
+        this.setTotal();
+        this.setPercents();
+    }
+    
+    public deletePoint(index: number): void {
 
         this._collection = this._collection.filter((p, i) => index !== i);
         this.setTotal();
         this.setPercents();
-
-        return this._collection;
-    }
-
-    public addPoint(point: BudgetPoint): BudgetPoint[] {
-
-        this._collection.unshift(point);
-        this.setTotal();
-        this.setPercents();
-
-        return this._collection;
     }
 }

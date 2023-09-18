@@ -49,11 +49,11 @@ export class BudgetFormComponent {
 
   }
 
-  public submit() {
+  public submit(): void {
     this.dialogRef.close(this.form.value);
   }
 
-  public cancel() {
+  public cancel(): void {
     this.dialogRef.close();
   }
 }

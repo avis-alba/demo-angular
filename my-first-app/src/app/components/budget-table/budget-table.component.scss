@@ -76,3 +76,50 @@ h2, h3 {
         margin: 0;
     }
 }
+
+.on-edit {
+    background-color: #f0e8ff;
+}
+
+input, select {
+    display: block;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding-left: 5px;
+}
+
+select {
+    background-color: #fff;
+}
+
+.edit-title {
+    height: 28px;
+    line-height: 28px;
+    font-size: 16px;
+    font-weight: 450;
+}
+
+.edit-amount {
+    width: 100%;
+    text-align: center;
+}
+
+.edit-error {
+    font-size: 10px;
+    line-height: 10px;
+    color: #f44336;
+    margin: 5px 0px;
+}
+
+.invalid-input {
+    margin-top: 10px;
+}
