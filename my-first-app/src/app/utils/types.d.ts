@@ -50,3 +50,10 @@ export interface PointFullData {
     index: number;
     point: BudgetPoint;
 }
+
+export interface ChartPointData {
+    name: string; 
+    data: [number];
+    category?: string;
+    pointWidth?: number;
+}

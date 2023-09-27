@@ -13,12 +13,14 @@ import { MatSelectModule } from "@angular/material/select";
 import { BudgetFormComponent } from "../budget-form/budget-form.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { BudgetChartComponent } from "../budget-chart/budget-chart.component";
 
 @NgModule({
     declarations: [
         BudgetComponent,
         BudgetTableComponent,
-        BudgetFormComponent
+        BudgetFormComponent,
+        BudgetChartComponent,
     ],
     imports: [
         CommonModule,

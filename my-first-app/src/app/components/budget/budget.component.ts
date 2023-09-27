@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetService} from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
-import { PointData, PointFullData, TableData } from 'src/app/utils/types';
+import { ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 
 @Component({
@@ -12,13 +12,14 @@ import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confi
 })
 export class BudgetComponent {
 
-    public tables: TableData[];
-
     public incomeTable: TableData;
     public outcomeTable: TableData;
 
     private _incomeBudget: BudgetService;
     private _outcomeBudget: BudgetService;
+
+    public incomeChartData: ChartPointData[];
+    public outcomeChartData: ChartPointData[];
     
     constructor(
       public dialog: MatDialog){
@@ -40,8 +41,6 @@ export class BudgetComponent {
         dataSource: this._outcomeBudget.collection, 
         total: this._outcomeBudget.total
       };
-      
-      this.tables = [this.incomeTable, this.outcomeTable];
     }
 
     public showChecked(num: number): void {

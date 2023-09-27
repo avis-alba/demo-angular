@@ -1,10 +1,9 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BudgetPoint, PointData, PointFullData, TableData } from 'src/app/utils/types';
+import { BudgetPoint, ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { BudgetFormComponent } from '../budget-form/budget-form.component';
 import { MatTable } from '@angular/material/table';
 import { BUDGET_CATEGORIES } from 'src/app/utils/const';
-import * as Highcharts from 'highcharts/highstock';
 
 @Component({
   selector: 'app-budget-table',
@@ -25,17 +24,12 @@ export class BudgetTableComponent{
   public titleValue: string;
   public descriptionValue: string;
 
-  public chartId: string;
-
-  public data: {name: string, data: [number], category?: string}[] = [];
-
   @ViewChild(MatTable) matTable: MatTable<BudgetPoint>;
 
   @Input() table: TableData;
   @Output() onDelete: EventEmitter<PointData> = new EventEmitter<PointData>;
   @Output() onEdit: EventEmitter<PointData> = new EventEmitter<PointData>;
   @Output() onAdd: EventEmitter<PointFullData> = new EventEmitter<PointFullData>;
-
 
   constructor(
     public dialog: MatDialog) {
@@ -51,26 +45,6 @@ export class BudgetTableComponent{
 
     this.isOnEditIndex = -1;
     this.isEditValid = true;
-  }
-
-  ngOnInit(): void {
-
-    if (this.table.name === 'Доход') {
-      this.chartId = 'column-chart-income';
-    }
-    
-    if (this.table.name === 'Расход') {
-      this.chartId = 'column-chart-outcome';
-    }
-  }
-  
-  ngAfterViewInit(): void {
-
-    for (let point of this.table.dataSource) {
-      this.data.push({name: point.item.title, data: [point.amount], category: point.category});
-    }
-
-    this.displayChart(this.data, this.chartId);
   }
 
   public addPoint(tableName: string) {
@@ -177,75 +151,5 @@ export class BudgetTableComponent{
     } else {
       this.isEditValid = true;
     }
-  }
-
-  public displayChart(data: any[], id: string): void {
-
-    let name: string;
-
-    if (id.includes('income')) {
-      name = 'Доход'
-    }
-    if (id.includes('outcome')) {
-      name = 'Расход'
-    } 
-
-    Highcharts.chart(id, {
-      chart: {
-          type: 'column',
-          zooming: {
-            mouseWheel: {
-              enabled: false
-            }
-          }
-      },
-      title: {
-          text: name
-      },
-      subtitle: {
-          text: 'для выбранных позиций'
-      },
-      xAxis: {
-          categories: [],
-          labels: {
-            enabled: false
-          }
-      },
-      yAxis: {
-          min: 0,
-          title: {
-              text: 'Сумма (₽)'
-          },
-      },
-      legend: {
-        enabled: true,
-        alignColumns: false
-      },
-      plotOptions: {
-          column: {
-              pointPadding: 0.2,
-              borderWidth: 0
-          },
-          series: {
-            showInLegend: true,
-            dataLabels: {
-              enabled: false,
-            },
-            tooltip: {
-              headerFormat: ``,
-              pointFormatter: function() {
-                const name = this.series.userOptions.name;
-                const category = data.find(v => v.name === name).category;
-                const value = data.find(v => v.name === name).data[0];
-                return `${category}: <span style="font-weight: bold">${this.series.userOptions.name}</span> <strong style="color: ${this.series.color}">${value}</strong>`
-              }
-            }
-          },
-      },
-      accessibility: {
-        enabled: false
-      },
-      series: data
-    });
   }
 }
