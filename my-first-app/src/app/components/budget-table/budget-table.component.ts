@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetPoint, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { BudgetFormComponent } from '../budget-form/budget-form.component';
@@ -11,7 +11,7 @@ import { BUDGET_CATEGORIES } from 'src/app/utils/const';
   styleUrls: ['./budget-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BudgetTableComponent {
+export class BudgetTableComponent implements OnChanges {
 
   public displayedColumns: string[];
   public categories: string[];
@@ -46,6 +46,10 @@ export class BudgetTableComponent {
 
     this.isOnEditIndex = -1;
     this.isEditValid = true;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateCheck(changes['table'].currentValue.name);
   }
 
   public updateCheck(tableName: string) {
@@ -119,8 +123,6 @@ export class BudgetTableComponent {
     if (this.isOnEditIndex !== -1) {
       this.savePoint(this.isOnEditTable, this.isOnEditIndex);
     }
-    
-    this.isOnEditIndex = -1;
   
     this.onDelete.emit({tableName, index});
   }

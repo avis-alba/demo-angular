@@ -45,7 +45,6 @@ export class BudgetComponent {
 
     public prepareChartData(tableName: string) {
       if (tableName === 'Доход') {
-        console.log('prepareData income')
         const pointsToDisplay: BudgetPoint[] = this._incomeBudget.getCheckedPoints();
         this.incomeChartData = [];
 
@@ -58,7 +57,6 @@ export class BudgetComponent {
       }
 
       if (tableName === 'Расход') {
-        console.log('prepareData outcome')
         const pointsToDisplay: BudgetPoint[] = this._outcomeBudget.getCheckedPoints();
         this.outcomeChartData = [];
         
@@ -82,15 +80,23 @@ export class BudgetComponent {
         if (pointData.tableName === 'Доход') {
   
           this._incomeBudget.deletePoint(pointData.index);
-          this.incomeTable.dataSource = this._incomeBudget.collection;
+          this.incomeTable = {
+            dataSource: this._incomeBudget.collection,
+            total: this._incomeBudget.total,
+            name: pointData.tableName
+          }
           this.incomeTable.total = this._incomeBudget.total;
         }
 
         if (pointData.tableName === 'Расход') {
   
           this._outcomeBudget.deletePoint(pointData.index);
-          this.outcomeTable.dataSource = this._outcomeBudget.collection;
-          this.outcomeTable.total = this._outcomeBudget.total;
+
+          this.outcomeTable = {
+            dataSource: this._outcomeBudget.collection,
+            total: this._outcomeBudget.total,
+            name: pointData.tableName
+          } 
         } 
       });  
     }
@@ -119,7 +125,11 @@ export class BudgetComponent {
         const pointData = this.incomeTable.dataSource[pointIndex];
 
         this._incomeBudget.editPoint(pointIndex, pointData);
-        this.incomeTable.total = this._incomeBudget.total;
+        this.incomeTable = {
+          name: editedPointData.tableName,
+          dataSource: this._incomeBudget.collection,
+          total: this._incomeBudget.total
+        }
       }
 
       if (editedPointData.tableName === 'Расход') {
@@ -127,7 +137,11 @@ export class BudgetComponent {
         const pointData = this.outcomeTable.dataSource[pointIndex];
 
         this._outcomeBudget.editPoint(pointIndex, pointData);
-        this.outcomeTable.total = this._outcomeBudget.total;
+        this.outcomeTable = {
+          name: editedPointData.tableName,
+          dataSource: this._outcomeBudget.collection,
+          total: this._outcomeBudget.total
+        }
       }
     }
 }
