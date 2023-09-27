@@ -192,7 +192,12 @@ export class BudgetTableComponent{
 
     Highcharts.chart(id, {
       chart: {
-          type: 'column'
+          type: 'column',
+          zooming: {
+            mouseWheel: {
+              enabled: false
+            }
+          }
       },
       title: {
           text: name
