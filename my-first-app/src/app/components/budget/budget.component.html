@@ -1,18 +1,18 @@
 <div class="content">
 
     <div class="content-block">
-        <app-budget-table [table]="incomeTable" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)"></app-budget-table>
+        <app-budget-table [table]="incomeTable" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)" (onCheck)="prepareChartData($event)"></app-budget-table>
         <app-budget-chart [chartData]="incomeChartData" [table]="incomeTable"></app-budget-chart> 
     </div>
 
     <div class="content-block">
-        <app-budget-table [table]="outcomeTable" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)"></app-budget-table>
+        <app-budget-table [table]="outcomeTable" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)" (onCheck)="prepareChartData($event)"></app-budget-table>
         <app-budget-chart [chartData]="outcomeChartData" [table]="outcomeTable"></app-budget-chart>
     </div>
     
 </div>
 
-<div class="log-buttons">
-    <button mat-raised-button class="show-checked" color="primary" (click)="showChecked(0)">Log checked Income</button>
-    <button mat-raised-button class="show-checked" color="primary" (click)="showChecked(1)">Log checked Outcome</button>
-</div>
+<!-- <div class="log-buttons">
+    <button mat-raised-button class="show-checked" color="primary" (click)="prepareChartData('Доход')">Log checked Income</button>
+    <button mat-raised-button class="show-checked" color="primary" (click)="prepareChartData('Расход')">Log checked Outcome</button>
+</div> -->

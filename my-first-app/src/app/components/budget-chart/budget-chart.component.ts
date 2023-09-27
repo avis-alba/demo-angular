@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartPointData, TableData } from 'src/app/utils/types';
 import * as Highcharts from 'highcharts/highstock';
 
@@ -8,16 +8,18 @@ import * as Highcharts from 'highcharts/highstock';
   styleUrls: ['./budget-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BudgetChartComponent implements OnInit, AfterViewInit {
+export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
   
-  public data: ChartPointData[] = [];
   public responsiveData: ChartPointData[] = [];
   public chartId: string;
 
   @Input() chartData: ChartPointData[];
   @Input() table: TableData;
+
+  constructor(private _ref: ChangeDetectorRef) {}
   
   ngOnInit(): void {
+
     if (this.table.name === 'Доход') {
       this.chartId = 'column-chart-income';
     }
@@ -29,21 +31,14 @@ export class BudgetChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    for (let point of this.table.dataSource) {
-      this.data.push({
-        name: point.item.title, 
-        data: [point.amount], 
-        category: point.category});
+    this.displayChart(this.chartData, this.chartId);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (!changes['chartData'].firstChange) {
+      this.displayChart(this.chartData, this.chartId);
     }
-
-    for (let point of this.data) {
-
-      const respPoint = {...point};
-      respPoint.pointWidth = 10;
-      this.responsiveData.push(respPoint);
-    }
-
-    this.displayChart(this.data, this.chartId);
   }
 
   public displayChart(data: any[], id: string): void {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetService} from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
-import { ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
+import { BudgetPoint, ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 
 @Component({
@@ -18,8 +18,8 @@ export class BudgetComponent {
     private _incomeBudget: BudgetService;
     private _outcomeBudget: BudgetService;
 
-    public incomeChartData: ChartPointData[];
-    public outcomeChartData: ChartPointData[];
+    public incomeChartData: ChartPointData[] = [];
+    public outcomeChartData: ChartPointData[] = [];
     
     constructor(
       public dialog: MatDialog){
@@ -43,9 +43,32 @@ export class BudgetComponent {
       };
     }
 
-    public showChecked(num: number): void {
-      if (!num) console.log('Доход:', this._incomeBudget.getCheckedPoints());
-      if (num) console.log('Расход:', this._outcomeBudget.getCheckedPoints());
+    public prepareChartData(tableName: string) {
+      if (tableName === 'Доход') {
+        console.log('prepareData income')
+        const pointsToDisplay: BudgetPoint[] = this._incomeBudget.getCheckedPoints();
+        this.incomeChartData = [];
+
+        for (let point of pointsToDisplay) {
+          this.incomeChartData.push({
+            name: point.item.title, 
+            data: [point.amount], 
+            category: point.category})
+        }
+      }
+
+      if (tableName === 'Расход') {
+        console.log('prepareData outcome')
+        const pointsToDisplay: BudgetPoint[] = this._outcomeBudget.getCheckedPoints();
+        this.outcomeChartData = [];
+        
+        for (let point of pointsToDisplay) {
+          this.outcomeChartData.push({
+            name: point.item.title, 
+            data: [point.amount], 
+            category: point.category})
+        }
+      }
     }
 
     public deletePoint(pointData: PointData): void {

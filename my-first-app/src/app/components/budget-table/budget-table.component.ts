@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BudgetPoint, ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
+import { BudgetPoint, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { BudgetFormComponent } from '../budget-form/budget-form.component';
 import { MatTable } from '@angular/material/table';
 import { BUDGET_CATEGORIES } from 'src/app/utils/const';
@@ -11,7 +11,7 @@ import { BUDGET_CATEGORIES } from 'src/app/utils/const';
   styleUrls: ['./budget-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BudgetTableComponent{
+export class BudgetTableComponent {
 
   public displayedColumns: string[];
   public categories: string[];
@@ -30,6 +30,7 @@ export class BudgetTableComponent{
   @Output() onDelete: EventEmitter<PointData> = new EventEmitter<PointData>;
   @Output() onEdit: EventEmitter<PointData> = new EventEmitter<PointData>;
   @Output() onAdd: EventEmitter<PointFullData> = new EventEmitter<PointFullData>;
+  @Output() onCheck: EventEmitter<string> = new EventEmitter<string>;
 
   constructor(
     public dialog: MatDialog) {
@@ -45,6 +46,10 @@ export class BudgetTableComponent{
 
     this.isOnEditIndex = -1;
     this.isEditValid = true;
+  }
+
+  public updateCheck(tableName: string) {
+    this.onCheck.emit(tableName);
   }
 
   public addPoint(tableName: string) {
