@@ -17,6 +17,7 @@ export class BudgetTableComponent implements OnChanges {
   public categories: string[];
 
   public isOnEditIndex: number;
+  public isOnEditChecked: boolean;
   public isOnEditTable: string;
   public isEditValid: boolean;
 
@@ -49,7 +50,12 @@ export class BudgetTableComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.updateCheck(changes['table'].currentValue.name);
+    
+    if (changes['table'].firstChange) return;
+    
+    if (this.isOnEditChecked) {   
+      this.updateCheck(changes['table'].currentValue.name);
+    }
   }
 
   public updateCheck(tableName: string) {
@@ -101,20 +107,22 @@ export class BudgetTableComponent implements OnChanges {
 
     this.isOnEditIndex = index;
     this.isOnEditTable = tableName;
-
+    
     if (tableName === 'Доход') {
       this.categories = BUDGET_CATEGORIES.income;
     }
-
+    
     if (tableName === 'Расход') {
       this.categories = BUDGET_CATEGORIES.outcome;
     }
   }
-
+  
   public savePoint(tableName: string, index: number): void {
-
+    
     this.isOnEditIndex = -1;
     this.isOnEditTable = '';
+    this.isOnEditChecked = this.table.dataSource[index].check;
+
     this.onEdit.emit({tableName, index});
   }
 
@@ -123,7 +131,9 @@ export class BudgetTableComponent implements OnChanges {
     if (this.isOnEditIndex !== -1) {
       this.savePoint(this.isOnEditTable, this.isOnEditIndex);
     }
-  
+    
+    this.isOnEditChecked = this.table.dataSource[index].check;
+    
     this.onDelete.emit({tableName, index});
   }
 

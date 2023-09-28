@@ -41,6 +41,8 @@ export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
+    if (changes['table'] && !changes['chartData']) return;
+
     if (this.chartData.length && this.chartId) {
 
       this.showChart = true;
