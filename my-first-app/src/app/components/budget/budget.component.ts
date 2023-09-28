@@ -52,7 +52,8 @@ export class BudgetComponent {
           this.incomeChartData.push({
             name: point.item.title, 
             data: [point.amount], 
-            category: point.category})
+            category: point.category,
+            maxPointWidth: 100})
         }
       }
 
@@ -64,7 +65,8 @@ export class BudgetComponent {
           this.outcomeChartData.push({
             name: point.item.title, 
             data: [point.amount], 
-            category: point.category})
+            category: point.category,
+            maxPointWidth: 100})
         }
       }
     }

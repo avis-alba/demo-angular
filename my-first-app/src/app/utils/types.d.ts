@@ -56,4 +56,5 @@ export interface ChartPointData {
     data: [number];
     category?: string;
     pointWidth?: number;
+    maxPointWidth?: number;
 }

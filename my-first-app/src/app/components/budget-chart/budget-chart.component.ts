@@ -104,6 +104,7 @@ export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
         enabled: true,
         alignColumns: false
       },
+      colors: ['#673AB7', '#D9CEEC', '#271544', '#B49DDB', '#341D5B', '#8775A4', '#4D2B89',],
       plotOptions: {
           column: {
               pointPadding: 0.2,
@@ -120,7 +121,7 @@ export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
                 const name = this.series.userOptions.name;
                 const category = data.find(v => v.name === name).category;
                 const value = data.find(v => v.name === name).data[0];
-                return `${category}: <span style="font-weight: bold">${this.series.userOptions.name}</span> <strong style="color: ${this.series.color}">${value}</strong>`
+                return `<span style="color:${this.series.color}; font-weight: bold">●</span> ${category}: <span style="font-weight: bold">${name}</span> <strong style="color: #673AB7">${value}</strong>`
               }
             }
           },
