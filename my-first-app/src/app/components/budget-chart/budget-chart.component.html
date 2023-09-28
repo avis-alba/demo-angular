@@ -1,3 +1,6 @@
 <div class="table-container chart">
-    <div [id]="chartId"></div>
+    <div *ngIf="!showChart" class="chart-message">
+        <p>Выберите пункты в таблице для отображения на графике</p>
+    </div>
+    <div [class.hidden]="!showChart" [id]="chartId"></div>
 </div>

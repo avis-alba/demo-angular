@@ -10,8 +10,9 @@ import * as Highcharts from 'highcharts/highstock';
 })
 export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
   
-  public responsiveData: ChartPointData[] = [];
+  public responsiveData: ChartPointData[];
   public chartId: string;
+  public showChart: boolean;
 
   @Input() chartData: ChartPointData[];
   @Input() table: TableData;
@@ -31,13 +32,23 @@ export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
 
-    this.displayChart(this.chartData, this.chartId);
+    if (this.chartData.length) {
+
+      this.showChart = true;
+      this.displayChart(this.chartData, this.chartId);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if (this.chartData && this.chartId) {
+    if (this.chartData.length && this.chartId) {
+
+      this.showChart = true;
       this.displayChart(this.chartData, this.chartId);
+    
+    } else {
+
+      this.showChart = false;
     }
   }
 
