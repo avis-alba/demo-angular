@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartPointData, TableData } from 'src/app/utils/types';
 import * as Highcharts from 'highcharts/highstock';
 
@@ -17,7 +17,7 @@ export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() chartData: ChartPointData[];
   @Input() table: TableData;
 
-  constructor(private _ref: ChangeDetectorRef) {}
+  constructor() {}
   
   ngOnInit(): void {
 

@@ -94,7 +94,6 @@ export class BudgetComponent {
             total: this._incomeBudget.total,
             name: pointData.tableName
           }
-          this.incomeTable.total = this._incomeBudget.total;
         }
 
         if (pointData.tableName === 'Расход') {
