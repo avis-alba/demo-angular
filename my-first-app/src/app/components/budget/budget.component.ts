@@ -75,7 +75,14 @@ export class BudgetComponent {
 
       dialogRef.afterClosed().subscribe(isConfirmed => {
 
-        if (!isConfirmed) return;
+        if (!isConfirmed) {
+
+          const tableIndex: number = pointData.tableName === 'Доход' ? 0 : 1;
+          const table = document.querySelectorAll<HTMLTableElement>('table')[tableIndex];
+          table.querySelectorAll<HTMLButtonElement>('.delete-button')[pointData.index].classList.remove('cdk-focused', 'cdk-program-focused');
+          
+          return;
+        }
 
         if (pointData.tableName === 'Доход') {
   
