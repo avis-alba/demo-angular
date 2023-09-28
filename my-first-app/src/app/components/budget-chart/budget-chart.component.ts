@@ -45,8 +45,11 @@ export class BudgetChartComponent implements OnInit, AfterViewInit, OnChanges {
 
     if (this.chartData.length && this.chartId) {
 
+      const currentScroll = window.scrollY;
+
       this.showChart = true;
       this.displayChart(this.chartData, this.chartId);
+      window.scrollTo(0, currentScroll);
     
     } else {
 
