@@ -75,7 +75,7 @@
                     <ng-template #saveButton>
                       <button mat-icon-button color="primary" (click)="savePoint(table.name, i)" [disabled]="!isEditValid"><mat-icon>save</mat-icon></button>
                     </ng-template>
-                    <button mat-icon-button color="warn" (click)="deletePoint(table.name, i)" [disabled]="!isEditValid"><mat-icon>delete</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="deletePoint(table.name, i)" [disabled]="!isEditValid" #deleteButton><mat-icon>delete</mat-icon></button>
                 </div>
               </td>
               <td mat-footer-cell *matFooterCellDef></td>

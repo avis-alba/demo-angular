@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetService} from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
 import { BudgetPoint, ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { BudgetTableComponent } from '../budget-table/budget-table.component';
 
 @Component({
   selector: 'app-budget',
@@ -20,9 +21,12 @@ export class BudgetComponent {
 
     public incomeChartData: ChartPointData[] = [];
     public outcomeChartData: ChartPointData[] = [];
+
+    @ViewChildren(BudgetTableComponent) budgetTables!: QueryList<BudgetTableComponent>;
     
     constructor(
-      public dialog: MatDialog){
+      public dialog: MatDialog,
+      private _renderer: Renderer2){
 
       this._incomeBudget = new BudgetService();
       this._outcomeBudget = new BudgetService();
@@ -80,8 +84,10 @@ export class BudgetComponent {
         if (!isConfirmed) {
 
           const tableIndex: number = pointData.tableName === 'Доход' ? 0 : 1;
-          const table = document.querySelectorAll<HTMLTableElement>('table')[tableIndex];
-          table.querySelectorAll<HTMLButtonElement>('.delete-button')[pointData.index].classList.remove('cdk-focused', 'cdk-program-focused');
+          const table = this.budgetTables.get(tableIndex);
+          const deleteButton = table.deleteButtons.get(pointData.index).nativeElement;
+          this._renderer.removeClass(deleteButton, 'cdk-focused');
+          this._renderer.removeClass(deleteButton, 'cdk-program-focused');
           
           return;
         }

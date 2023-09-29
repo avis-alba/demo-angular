@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetPoint, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { BudgetFormComponent } from '../budget-form/budget-form.component';
@@ -26,6 +26,7 @@ export class BudgetTableComponent implements OnChanges {
   public descriptionValue: string;
 
   @ViewChild(MatTable) matTable: MatTable<BudgetPoint>;
+  @ViewChildren('deleteButton', { read: ElementRef }) deleteButtons: QueryList<ElementRef>;
 
   @Input() table: TableData;
   @Output() onDelete: EventEmitter<PointData> = new EventEmitter<PointData>;
