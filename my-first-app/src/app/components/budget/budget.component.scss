@@ -1,38 +1,57 @@
-@import url(../posts/posts.component.scss);
-
-h2 {
-    margin: 0;
-}
-
-.edit-buttons mat-icon {
-    margin: 0;
-}
-
-.header {
-    display: inline-flex;
-    margin-top: 0;
-    padding: 5px 16px;
-}
-
 .content {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
+    gap: 40px;
+    padding: 20px 40px;
     box-sizing: border-box;
 }
 
-.table-block {
+.content-block {
+    display: flex;
+    flex-direction: column;
     flex: 1;
 }
 
-.table-container {
-    margin-bottom: 0;
+.log-buttons {
+    width: 700px;
+    margin: 10px auto;
+    text-align: center;
+    border: 1px solid #673ab7;
+
+    & button {
+        margin: 20px;
+    }
 }
 
-.mat-mdc-footer-row {
-    font-weight: bold;
-    background: #673ab7;
-    color: #fff;
+@media (max-width: 1000px) {
+    
+    .content {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .log-buttons {
+        display: none;
+    }
 }
+
+@media (max-width: 600px) {
+    
+    .content {
+        flex: auto;
+        flex-direction: column;
+        padding: 10px 0px 20px;
+    }
+
+    app-budget-table {
+        overflow-x: scroll;
+    }
+
+    .content-block {
+        width: 100%;
+        padding: 5px 0px;
+    }
+}
+
+

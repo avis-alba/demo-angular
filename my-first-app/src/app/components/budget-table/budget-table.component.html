@@ -1,0 +1,90 @@
+<div class="table-block">
+
+    <div class="table-head">
+        <div class="table-container header"><h2>{{ table.name }}</h2></div>
+        <button class="add-item" mat-raised-button color="primary" (click)="addPoint(table.name)" [disabled]="!isEditValid">Добавить</button>
+    </div>
+   
+    <div class="table-container">
+        <table mat-table [dataSource]="table.dataSource">
+        
+            <ng-container matColumnDef="check" sticky>
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let point; let i = index">
+                    <mat-checkbox color="primary" [(ngModel)]="point.check" (click)="updateCheck(table.name)"></mat-checkbox>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>Всего:</td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef>Категория</th>
+              <td mat-cell *matCellDef="let point; let i = index">
+                <p *ngIf="isOnEditIndex !== i; else catSelect">{{ point.category }}</p>
+                <ng-template #catSelect>
+                  <select [(ngModel)]="point.category">
+                    <option *ngFor="let category of categories" [value]="category">
+                      {{category}}
+                    </option>
+                  </select>
+                </ng-template>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+          
+            <ng-container matColumnDef="item">
+              <th mat-header-cell *matHeaderCellDef>Наименование</th>
+              <td mat-cell *matCellDef="let point; let i = index">
+                <h3 *ngIf="isOnEditIndex !== i; else titleInput">{{ point.item.title }}</h3>
+                <ng-template #titleInput>
+                  <input type="text" [(ngModel)]="point.item.title" [class.invalid-input]="!point.item.title || !point.item.description" class="edit-title" (input)="onInputTitle(title.value)" #title>
+                </ng-template>
+                <p *ngIf="isOnEditIndex !== i; else descrInput" class="postText">{{ point.item.description }}</p>
+                <ng-template #descrInput>
+                  <input type="text" [(ngModel)]="point.item.description" (input)="onInputDescription(description.value)" #description>
+                </ng-template>
+                <p class="edit-error" *ngIf="!point.item.title || !point.item.description">Поля заголовок и описание не могут быть пустыми</p>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>Сумма</th>
+                <td mat-cell *matCellDef="let point; let i = index">
+                  <p *ngIf="isOnEditIndex !== i; else amountInput">{{ point.amount | currency:'RUB':'symbol-narrow':'1.1-1' }}</p>
+                  <ng-template #amountInput>
+                    <input type="number" [(ngModel)]="point.amount" class="edit-amount" (input)="onInputAmount(amount.value)" #amount>
+                  </ng-template>
+                  <p class="edit-error" *ngIf="point.amount <= 0 ">Введите число больше 0</p>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>{{ table.total | currency:'RUB':'symbol-narrow':'1.1-1' }}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="percent">
+                <th mat-header-cell *matHeaderCellDef>%</th>
+                <td mat-cell *matCellDef="let point">
+                  <p>{{ point.percent | percent:'1.1-1' }}</p>
+                </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="tools">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let point; let i = index">
+                <div class="edit-buttons">
+                    <button *ngIf="isOnEditIndex !== i; else saveButton" mat-icon-button color="primary" (click)="editPoint(table.name, i)" [disabled]="!isEditValid"><mat-icon>edit</mat-icon></button>
+                    <ng-template #saveButton>
+                      <button mat-icon-button color="primary" (click)="savePoint(table.name, i)" [disabled]="!isEditValid"><mat-icon>save</mat-icon></button>
+                    </ng-template>
+                    <button mat-icon-button color="warn" (click)="deletePoint(table.name, i)" [disabled]="!isEditValid" #deleteButton><mat-icon>delete</mat-icon></button>
+                </div>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [class.on-edit]="isOnEditIndex === i"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+    </div>
+
+</div>

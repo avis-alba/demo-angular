@@ -5,20 +5,37 @@ import { Router, RouterModule } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
-import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { BudgetTableComponent } from "../budget-table/budget-table.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatSelectModule } from "@angular/material/select";
+import { BudgetFormComponent } from "../budget-form/budget-form.component";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { BudgetChartComponent } from "../budget-chart/budget-chart.component";
 
 @NgModule({
     declarations: [
         BudgetComponent,
+        BudgetTableComponent,
+        BudgetFormComponent,
+        BudgetChartComponent,
     ],
     imports: [
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         RouterModule.forChild([
             {path: '', component: BudgetComponent}
         ]),
         MatTableModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 export class BudgetModule {
