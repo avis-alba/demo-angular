@@ -14,6 +14,7 @@ import { BudgetFormComponent } from "../budget-form/budget-form.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { BudgetChartComponent } from "../budget-chart/budget-chart.component";
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { BudgetChartComponent } from "../budget-chart/budget-chart.component";
         MatCheckboxModule,
         MatSelectModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        DragDropModule
     ]
 })
 export class BudgetModule {
