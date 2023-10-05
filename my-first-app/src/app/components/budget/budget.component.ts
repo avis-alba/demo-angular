@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetService} from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
@@ -24,9 +24,12 @@ export class BudgetComponent {
     public outcomeChartData: ChartPointData[] = [];
 
     public contentBlocks: TableData[];
+    public listOrientation: {orientation: any, axis: any} = {orientation: 'horizontal', axis: 'x'};
+    public showAlert: boolean = false;
 
     @ViewChildren(BudgetTableComponent) budgetTables!: QueryList<BudgetTableComponent>;
-    
+    @ViewChild('content', { read: ElementRef }) content: ElementRef;
+
     constructor(
       public dialog: MatDialog,
       private _renderer: Renderer2,
@@ -53,6 +56,50 @@ export class BudgetComponent {
       };
 
       this.contentBlocks = [this.incomeTable, this.outcomeTable];
+
+      if (document.documentElement.clientWidth < 1232) {
+
+        this.listOrientation.orientation = 'vertical';
+        this.listOrientation.axis = 'y';
+
+      } else {
+
+        this.listOrientation.orientation = 'horizontal';
+        this.listOrientation.axis = 'x';
+      }
+
+      let width = '';
+
+      window.onresize = (e) => {
+        
+        if (document.documentElement.clientWidth < 1232) {
+          
+          if (this.outcomeTable.chartData.length || this.incomeTable.chartData.length) {
+
+            this.showAlert = true;
+  
+            if (width) {
+              this.content.nativeElement.style.width = width + 'px';
+            } else {
+              width = document.documentElement.clientWidth.toString();
+            }
+          }
+
+          this.listOrientation.orientation = 'vertical';
+          this.listOrientation.axis = 'y';
+  
+        } else {
+          
+          width = '';
+          this.content.nativeElement.style.width = '';
+          this.showAlert = false;
+  
+          this.listOrientation.orientation = 'horizontal';
+          this.listOrientation.axis = 'x';
+        }
+
+        this._changeDetector.detectChanges();
+      }
     }
 
     public prepareChartData(tableName: string) {
@@ -68,6 +115,7 @@ export class BudgetComponent {
             maxPointWidth: 100})
         }
         this.contentBlocks.find( i => i.name === tableName).chartData = this.incomeChartData;
+        if (!this.incomeChartData.length) this.content.nativeElement.style.width = '';
       }
 
       if (tableName === 'Расход') {
@@ -82,6 +130,7 @@ export class BudgetComponent {
             maxPointWidth: 100})
         }
         this.contentBlocks.find( i => i.name === tableName).chartData = this.outcomeChartData;
+        if (!this.outcomeChartData.length) this.content.nativeElement.style.width = '';
       }
     }
 
@@ -200,17 +249,5 @@ export class BudgetComponent {
 
     public drop(event: CdkDragDrop<any>) {
       moveItemInArray(this.contentBlocks, event.previousIndex, event.currentIndex);
-    }
-
-    public listOrientation(): any {
-
-      if (document.documentElement.clientWidth < 1232) {
-
-        return {orientation: 'vertical', axis: 'y'};
-
-      } else {
-
-        return {orientation: 'horizontal', axis: 'x'};
-      }
     }
 }

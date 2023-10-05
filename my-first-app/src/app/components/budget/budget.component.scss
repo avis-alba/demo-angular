@@ -3,6 +3,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 40px;
+    margin: auto;
     padding: 20px 40px;
     box-sizing: border-box;
 }
@@ -64,4 +65,20 @@
 
 .content.cdk-drop-list-dragging .content-block:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.alert {
+    position: fixed;
+    top: 20px;
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    font-size: 16px;
+    background-color: #fff;
+    box-shadow: 0px 2px 3px 2px #f44336;
+    z-index: 1000;
+
+    & p {
+        margin: 10px 0px;
+    }
 }
