@@ -38,6 +38,7 @@ export interface TableData {
     name: string;
     dataSource: BudgetPoint[];
     total: number;
+    chartData: ChartPointData[];
 }
 
 export interface PointData {

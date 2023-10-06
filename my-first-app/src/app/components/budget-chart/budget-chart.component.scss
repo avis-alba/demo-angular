@@ -5,10 +5,11 @@
 }
 
 .chart-message {
-    height: 50px;
+    height: fit-content;
     text-align: center;
     font-size: 20px;
     line-height: 50px;
+    background-color: #fff;
     color: #673ab7;
 }
 

@@ -1,13 +1,11 @@
-<div class="content">
+<div class="content" cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListOrientation]="listOrientation.orientation" #content>
 
-    <div class="content-block">
-        <app-budget-table [table]="incomeTable" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)" (onCheck)="prepareChartData($event)"></app-budget-table>
-        <app-budget-chart [chartData]="incomeChartData" [table]="incomeTable"></app-budget-chart> 
-    </div>
+        <div *ngFor="let el of contentBlocks" class="content-block" [cdkDragLockAxis]="listOrientation.axis" cdkDragBoundary=".content" cdkDrag>
+            <app-budget-table [table]="el" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)" (onCheck)="prepareChartData($event)"></app-budget-table>
+            <app-budget-chart [table]="el" [chartData]="el.chartData"></app-budget-chart>
+        </div>
 
-    <div class="content-block">
-        <app-budget-table [table]="outcomeTable" (onDelete)="deletePoint($event)" (onAdd)="addPoint($event)" (onEdit)="editPoint($event)" (onCheck)="prepareChartData($event)"></app-budget-table>
-        <app-budget-chart [chartData]="outcomeChartData" [table]="outcomeTable"></app-budget-chart>
-    </div>
-    
+</div>
+<div *ngIf="showAlert" class="alert">
+    <p>Не изменяйте размер окна при включенном графике для корректного отображения</p>
 </div>

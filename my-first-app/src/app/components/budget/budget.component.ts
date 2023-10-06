@@ -1,10 +1,11 @@
-import { Component, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BudgetService} from 'src/app/services/budget.service';
 import { incomeData, outcomeData } from 'src/app/utils/budget-data';
 import { BudgetPoint, ChartPointData, PointData, PointFullData, TableData } from 'src/app/utils/types';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { BudgetTableComponent } from '../budget-table/budget-table.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-budget',
@@ -22,11 +23,17 @@ export class BudgetComponent {
     public incomeChartData: ChartPointData[] = [];
     public outcomeChartData: ChartPointData[] = [];
 
+    public contentBlocks: TableData[];
+    public listOrientation: {orientation: any, axis: any} = {orientation: 'horizontal', axis: 'x'};
+    public showAlert: boolean = false;
+
     @ViewChildren(BudgetTableComponent) budgetTables!: QueryList<BudgetTableComponent>;
-    
+    @ViewChild('content', { read: ElementRef }) content: ElementRef;
+
     constructor(
       public dialog: MatDialog,
-      private _renderer: Renderer2){
+      private _renderer: Renderer2,
+      private _changeDetector: ChangeDetectorRef){
 
       this._incomeBudget = new BudgetService();
       this._outcomeBudget = new BudgetService();
@@ -37,14 +44,62 @@ export class BudgetComponent {
       this.incomeTable = {
         name: 'Доход', 
         dataSource: this._incomeBudget.collection, 
-        total: this._incomeBudget.total
+        total: this._incomeBudget.total,
+        chartData: this.incomeChartData,
       };
 
       this.outcomeTable = {
         name: 'Расход', 
         dataSource: this._outcomeBudget.collection, 
-        total: this._outcomeBudget.total
+        total: this._outcomeBudget.total,
+        chartData: this.outcomeChartData
       };
+
+      this.contentBlocks = [this.incomeTable, this.outcomeTable];
+
+      if (document.documentElement.clientWidth < 1232) {
+
+        this.listOrientation.orientation = 'vertical';
+        this.listOrientation.axis = 'y';
+
+      } else {
+
+        this.listOrientation.orientation = 'horizontal';
+        this.listOrientation.axis = 'x';
+      }
+
+      let width = '';
+
+      window.onresize = (e) => {
+        
+        if (document.documentElement.clientWidth < 1232) {
+          
+          if (this.outcomeTable.chartData.length || this.incomeTable.chartData.length) {
+
+            this.showAlert = true;
+  
+            if (width) {
+              this.content.nativeElement.style.width = width + 'px';
+            } else {
+              width = document.documentElement.clientWidth.toString();
+            }
+          }
+
+          this.listOrientation.orientation = 'vertical';
+          this.listOrientation.axis = 'y';
+  
+        } else {
+          
+          width = '';
+          this.content.nativeElement.style.width = '';
+          this.showAlert = false;
+  
+          this.listOrientation.orientation = 'horizontal';
+          this.listOrientation.axis = 'x';
+        }
+
+        this._changeDetector.detectChanges();
+      }
     }
 
     public prepareChartData(tableName: string) {
@@ -59,6 +114,8 @@ export class BudgetComponent {
             category: point.category,
             maxPointWidth: 100})
         }
+        this.contentBlocks.find( i => i.name === tableName).chartData = this.incomeChartData;
+        if (!this.incomeChartData.length) this.content.nativeElement.style.width = '';
       }
 
       if (tableName === 'Расход') {
@@ -72,6 +129,8 @@ export class BudgetComponent {
             category: point.category,
             maxPointWidth: 100})
         }
+        this.contentBlocks.find( i => i.name === tableName).chartData = this.outcomeChartData;
+        if (!this.outcomeChartData.length) this.content.nativeElement.style.width = '';
       }
     }
 
@@ -83,7 +142,7 @@ export class BudgetComponent {
 
         if (!isConfirmed) {
 
-          const tableIndex: number = pointData.tableName === 'Доход' ? 0 : 1;
+          const tableIndex: number = this.contentBlocks.findIndex( i => i.name === pointData.tableName);
           const table = this.budgetTables.get(tableIndex);
           const deleteButton = table.deleteButtons.get(pointData.index).nativeElement;
           this._renderer.removeClass(deleteButton, 'cdk-focused');
@@ -95,11 +154,19 @@ export class BudgetComponent {
         if (pointData.tableName === 'Доход') {
   
           this._incomeBudget.deletePoint(pointData.index);
+          
           this.incomeTable = {
             dataSource: this._incomeBudget.collection,
             total: this._incomeBudget.total,
-            name: pointData.tableName
+            name: pointData.tableName,
+            chartData: this.incomeChartData
           }
+
+          const i = this.contentBlocks.findIndex( i => i.name === pointData.tableName);
+          this.contentBlocks[i] = this.incomeTable;
+          this._changeDetector.detectChanges();
+ 
+          this.prepareChartData(pointData.tableName);
         }
 
         if (pointData.tableName === 'Расход') {
@@ -109,8 +176,15 @@ export class BudgetComponent {
           this.outcomeTable = {
             dataSource: this._outcomeBudget.collection,
             total: this._outcomeBudget.total,
-            name: pointData.tableName
-          } 
+            name: pointData.tableName,
+            chartData: this.outcomeChartData
+          }
+
+          const i = this.contentBlocks.findIndex( i => i.name === pointData.tableName);
+          this.contentBlocks[i] = this.outcomeTable;
+          this._changeDetector.detectChanges();
+
+          this.prepareChartData(pointData.tableName);
         } 
       });  
     }
@@ -142,8 +216,15 @@ export class BudgetComponent {
         this.incomeTable = {
           name: editedPointData.tableName,
           dataSource: this._incomeBudget.collection,
-          total: this._incomeBudget.total
+          total: this._incomeBudget.total,
+          chartData: this.incomeChartData
         }
+
+        const i = this.contentBlocks.findIndex( i => i.name === editedPointData.tableName);
+        this.contentBlocks[i] = this.incomeTable;
+        this._changeDetector.detectChanges();
+
+        this.prepareChartData(editedPointData.tableName);
       }
 
       if (editedPointData.tableName === 'Расход') {
@@ -154,8 +235,19 @@ export class BudgetComponent {
         this.outcomeTable = {
           name: editedPointData.tableName,
           dataSource: this._outcomeBudget.collection,
-          total: this._outcomeBudget.total
+          total: this._outcomeBudget.total,
+          chartData: this.outcomeChartData
         }
+
+        const i = this.contentBlocks.findIndex( i => i.name === editedPointData.tableName);
+        this.contentBlocks[i] = this.outcomeTable;
+        this._changeDetector.detectChanges();
+        
+        this.prepareChartData(editedPointData.tableName);
       }
+    }
+
+    public drop(event: CdkDragDrop<any>) {
+      moveItemInArray(this.contentBlocks, event.previousIndex, event.currentIndex);
     }
 }
