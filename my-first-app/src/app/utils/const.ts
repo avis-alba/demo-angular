@@ -23,6 +23,7 @@ export const MOMENT_DATE_FORMATS: MatDateFormats = {
     minLength: 'не может быть короче 8 символов',
     maxLengthPost: 'не может быть длинее 500 символов',
     maxLengthTitle: 'не может быть длинее 100 символов',
+    minAmount: 'Введите число больше 0',
     allowedChar: 'может содержать только буквы, цифры, пробелы и символы .,-\'()',
     notAllowedChar: 'не может содержать только символы или пробелы',
     notAllowedEnding: 'не может начинаться/заканчиваться символом или пробелом',
@@ -41,4 +42,10 @@ export const LOADING_MESSAGES: { [key: string]: string } = {
     editError: 'Не удалось отредактировать пост, попробуйте снова',
     deleteError: 'Не удалось удалить пост, попробуйте снова',
     noData: 'Нет данных'
+}
+
+export const BUDGET_CATEGORIES: { income: string[], outcome: string[] } = {
+
+  income: ['Работа', 'Продажа вещей', 'Подарки', 'Фриланс', 'Квартира'],
+  outcome: ['Еда', 'Техника', 'Одежда', 'Развлечения', 'Квартира']
 }
