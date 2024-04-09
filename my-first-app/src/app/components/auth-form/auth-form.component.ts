@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthFormService } from '../../services/auth-form.sevice';
 import { MyValidators } from '../reg-form/my.validators';
@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoginData } from 'src/app/utils/types';
 import { ERROR_MESSAGES } from 'src/app/utils/const';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss']
 })
-export class AuthFormComponent {
+export class AuthFormComponent implements OnDestroy {
 
   public form: FormGroup;
   public email: AbstractControl;
@@ -25,17 +26,19 @@ export class AuthFormComponent {
   public hideForm: boolean;
   public hideError: boolean;
 
+  public subscriptions: Subscription[] = [];
+
   constructor(
     private _formService: AuthFormService,
     private _router: Router,
     private _auth: AuthService) {
-    
+
     this.form = new FormGroup({
-      email: new FormControl('my-email@mail.ru', [
-        Validators.required, 
-        Validators.email, 
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.email,
         Validators.pattern('^.+@.+\\..+$')]),
-      password: new FormControl('Qwerty1!', [
+      password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
         MyValidators.passwordRequirements
@@ -53,29 +56,33 @@ export class AuthFormComponent {
     this.hideError = true;
   }
 
-  public submit():void {
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => { sub.unsubscribe() });
+  }
 
-    const {email, password} = this.form.value;
+  public submit(): void {
 
-    const loginData: LoginData = {email, password};
+    const { email, password } = this.form.value;
 
-    this._formService.login(loginData)
+    const loginData: LoginData = { email, password };
+
+    this.subscriptions.push(this._formService.login(loginData)
       .subscribe({
         next: (user) => {
 
           this.hideForm = true;
           this._auth.login(user.email);
-          
+
           setTimeout(() => {
             this._router.navigate(['/']);
           }, 500);
 
         },
-        
+
         error: (error) => {
           console.log(error);
           this.hideError = false;
         }
-    });
+      }));
   }
 }
